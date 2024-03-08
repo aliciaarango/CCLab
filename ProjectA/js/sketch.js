@@ -14,7 +14,7 @@ let value = 150
 
 function setup() {
   let canvas = createCanvas(800, 500);
-  canvas.id("p5canvas")
+  canvas.id("P5CANVAS")
   canvas.parent("p5-canvas-container")
   angleMode(DEGREES);
   rectMode(CENTER);
