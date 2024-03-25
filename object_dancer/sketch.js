@@ -48,18 +48,21 @@ class AliciaDancer {
     // your dancer's desired moves and behaviour
 
     rectMode(CENTER);
-    this.speed = sin(frameCount / 20);
-    this.speed2 = map(cos(frameCount / 2), -1, 1, -0.5, 0.5);
-    this.speed3 = map(cos(frameCount / 20), -1, 1, -0.5, 0.5);
+    this.speed1 = sin(frameCount / 20);
+    this.speed2 = sin(frameCount / 20);
+    this.speed3 = map(cos(frameCount / 2), -1, 1, -0.5, 0.5);
+    this.speed4 = map(cos(frameCount / 20), -1, 1, -0.5, 0.5);
 
     
     if(mouseIsPressed == true) {
-      this.speed = sin(frameCount/2);
-          this.y -= this.speed * 2;
+      this.speed1 = sin(frameCount/2);
+          this.y -= this.speed1 * 2;
+          this.speed2 = map(sin(frameCount / 2), -1, 1, -1, 1);
 
     }else {
-      this.speed = sin(frameCount/20);
-          this.y += this.speed * 2;
+      this.speed1 = sin(frameCount/20);
+          this.y += this.speed1 * 2;
+          this.speed2 = map(sin(frameCount / 20), -1, 1, -1, 1);
 
     }
   }
@@ -76,16 +79,13 @@ class AliciaDancer {
 
 
 
+    let left_wing = this.speed2 / 5;
+    let left_arm = this.speed3 / 5;
+    let right_wing = -this.speed2 / 5;
+    let right_arm = -this.speed3 / 5;
+    let head_bob = this.speed4 / 5;
+
     push()
-    //scale(this.scale, this.scale_width);
-
-  
-
-    let left_wing = this.speed / 5;
-    let left_arm = this.speed2 / 5;
-    let right_wing = -this.speed / 5;
-    let right_arm = -this.speed2 / 5;
-    let head_bob = this.speed3 / 5;
 
     //Small wings
     push();
@@ -222,7 +222,7 @@ class AliciaDancer {
     //Legs
     push();
     noStroke();
-    let left_leg = -this.speed / 10;
+    let left_leg = -this.speed2 / 10;
     rotate(left_leg);
     fill("pink");
     ellipse(-5, 20, 5, 60);
@@ -230,7 +230,7 @@ class AliciaDancer {
     push();
     noStroke();
     fill("pink");
-    let right_leg = this.speed / 10;
+    let right_leg = this.speed2 / 10;
     rotate(right_leg);
     ellipse(5, 20, 5, 60);
     pop();
