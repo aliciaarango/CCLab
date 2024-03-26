@@ -42,6 +42,10 @@ class AliciaDancer {
     this.circle_radius = 45;
     this.circle_radius2 = 35;
     this.angle = PI / 7;
+    this.speed1;
+    this.speed2;
+    this.speed3;
+    this.speed4;
   }
   update() {
     // update properties here to achieve
