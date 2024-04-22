@@ -192,7 +192,7 @@ for (let i = 0; i < 5; i++) {
     textAlign(CENTER, CENTER);
     translate(width/2, height/2);
     fill(255, 255, 255);
-    text("Go to next chapter", 0, 0)
+    text("Insert coded sequence", 0, 0)
   }
 }
 
