@@ -103,7 +103,7 @@ function draw() {
       }
     }
 
-    console.log(rain.length)
+
 
     push();
     brush(25, 25, 25, width, 20);

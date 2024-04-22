@@ -73,7 +73,7 @@ function draw() {
     rainFall.pause();
   }
 
-  fill(255)
+  
   let p = new Raindrop(random(width), 100);
   rain.push(p);
 
@@ -256,7 +256,7 @@ pop()
   image(img, 0, 0);
   
 push()  
-  if(isDone){ console.log(isDone);
+  if(isDone){ 
    background(0);
   textAlign(CENTER, CENTER);
   textSize(36);
