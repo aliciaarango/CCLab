@@ -15,11 +15,14 @@ let forestSound;
 let myVid;
 let isReady = false;
 let isDone = false;
+let playSound = true;
+
+let rain = [];
 
 function preload(){
   
   myFont = loadFont("assets/font.ttf")
-  forestSound = loadSound("assets/forestAmbience.mp3")
+  rainFall = loadSound("assets/rain.mp3")
 }
 
 function setup() {
@@ -32,7 +35,8 @@ function setup() {
   fill(255, 255, 255);
   textFont(myFont);
   
-  forestSound.play();
+  //forestSound.play();
+  rainFall.setVolume(0.5);
   
   myVid = createVideo("assets/convoVid_3.mp4");
   myVid.size(1200, 600);
@@ -59,6 +63,33 @@ function setup() {
 
 function draw() {
   background(0);
+
+  if(playSound){
+
+    if(!rainFall.isPlaying()){
+      rainFall.play();
+    }
+  }else{
+    rainFall.pause();
+  }
+
+  fill(255)
+  let p = new Raindrop(random(width), 100);
+  rain.push(p);
+
+  for (let i = 0; i < rain.length; i++) {
+    let p = rain[i];
+    p.update();
+    p.display();
+    p.splash();
+    p.fade();
+  }
+
+  for (let i = rain.length - 1; i >= 0; i--) {
+    if (rain[i].lifespan == true) {
+      rain.splice(i, 1);
+    }
+  }
   
   for (let k = 20; k < width; k += 110) {
     noStroke();
@@ -247,16 +278,18 @@ function mousePressed(){
   }
 }
 
-function handleEnd(){
-  isDone = true;
-}
-
 function keyPressed(){
   if(key == "a"){
     //darken = true;
-    forestSound.pause()
+   // forestSound.pause()
+    playSound = false;
     myVid.play()
   }
+}
+
+function handleEnd(){
+  isDone = true;
+  //playSound = true;
 }
 
 /*
@@ -527,6 +560,63 @@ class Wolf {
     fill("white")
     triangle(-205, 5, -180, -20, -205, -5)
     pop()
+
+    pop();
+  }
+}
+
+class Raindrop {
+  // constructor function
+  constructor(startX, startY) {
+    // properties: particle's characteristics
+    this.x = startX;
+    this.y = startY;
+    this.width = 0.5;
+    this.height = 15;
+    this.spdY = random(2, 3);
+    // this.splashed = false;
+    this.lifespan = false;
+    // this.finished = false;
+    this.r = this.r;
+    this.g = this.g;
+    this.b = this.b;
+    this.alpha = 200;
+  }
+  // methods (functions): particle's behaviors
+  update() {
+    // (add)
+    this.y += this.spdY;
+
+    this.r = 150;
+    this.g = 150;
+    this.b = 150;
+  }
+
+  splash() {
+    if (this.y > height - 20) {
+      this.spdY = 0;
+      this.width = 22;
+      this.height = 2;
+      //this.lifespan = true;
+      //this.splashed = true;
+      this.alpha -= 20;
+    }
+  }
+
+  fade() {
+    if (this.alpha <= 0) {
+      this.lifespan = true;
+    }
+  }
+
+  display() {
+    // particle's appearance
+    push();
+    translate(this.x, this.y);
+    stroke(this.r, this.g, this.b, this.alpha);
+    strokeWeight(1);
+    noFill();
+    ellipse(0, 0, this.width, this.height);
 
     pop();
   }
