@@ -44,6 +44,9 @@ h1{
   grid-column-end: 3;
   grid-row-start: 2;
   grid-row-end: 3;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 #wrapper{
