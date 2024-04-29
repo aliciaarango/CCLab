@@ -10,6 +10,7 @@ let darken = false;
 
 let currentScene = 1;
 
+let rainFall;
 let myFont;
 let forestSound;
 let myVid;
