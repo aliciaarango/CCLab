@@ -13,10 +13,13 @@ let currentScene = 1;
 let rainFall;
 let myFont;
 let forestSound;
-let myVid;
+//let myVid;
 let isReady = false;
 let isDone = false;
 let playSound = true;
+
+let bgm;
+let playSequence = false;
 
 let rain = [];
 
@@ -24,6 +27,7 @@ function preload(){
   
   myFont = loadFont("assets/font.ttf")
   rainFall = loadSound("assets/rain.mp3")
+  bgm = loadSound("assets/bgmPage3.mp3");
 }
 
 function setup() {
@@ -39,13 +43,13 @@ function setup() {
   //forestSound.play();
   rainFall.setVolume(0.5);
   
-  myVid = createVideo("assets/convoVid_3.mp4");
+  /*myVid = createVideo("assets/convoVid_3.mp4");
   myVid.size(1200, 600);
   myVid.volume(1);
   myVid.noLoop();
-  myVid.hide();
+  myVid.hide();*/
   
-  myVid.onended(handleEnd);
+  //bgm.onended(handleEnd);
   
   backGround = new WoodsGround(17, 17, 17, 170, 0.01);
   midGround1 = new WoodsGround(51, 51, 51, 230, 0.01);
@@ -57,9 +61,17 @@ function setup() {
   treeLeaves = new TreeLeaves(51, 51, 51, 0, 0.01);
   
   littleRed = new LittleRedRidingHood(100, 455, 0.9);
-  //littleRedConvo = new LittleRedRidingHood(500, 455, 1);
-  wolf = new Wolf(950, 420, 0.4);
-  //wolfConvo = new Wolf(700, 420, 0.7);
+
+  wolf = new Wolf(950, 420, 0.4, 255, 255, 255);
+
+
+//Sequence
+littleRedConvo = new LittleRedRidingHood(450, 400, 1);
+
+wolfConvo = new Wolf(720, 350, 0.5, 255, 255, 255);
+
+wolf2Convo = new Wolf(720, 350, 0.5, 255, 0, 0);
+
 }
 
 function draw() {
@@ -253,21 +265,29 @@ pop()
     //myVid.noLoop();
     myVid.play();
   }*/  
-  let img = myVid.get();
-  image(img, 0, 0);
-  
-push()  
-  if(isDone){ 
-   background(0);
-  textAlign(CENTER, CENTER);
-  textSize(36);
-  fill(255, 255, 255);
-  textFont(myFont);
-    translate(width/2, height/2);
-    fill(255, 255, 255);
-    text("Go to next chapter", 0, 0)
+  //let img = myVid.get();
+  //image(img, 0, 0);
+
+  if(playSequence){
+    push()
+    sequence();
+    pop()
   }
-pop()
+  
+//push()  
+  if(isDone){ 
+   //background(0);
+  //textAlign(CENTER, CENTER);
+  textSize(46);
+
+  textFont(myFont);
+  //translate(width/2, height/2);
+
+    let r = map(frameCount, logframes + 50, logframes + 250, 0, 255)
+    fill(r);
+    text("Go to next chapter", width/2, height/2);
+  }
+//pop()
 
   
 }
@@ -284,12 +304,16 @@ function keyPressed(){
     //darken = true;
    // forestSound.pause()
     playSound = false;
-    myVid.play()
+    //myVid.play()
+    playSequence = true;
+    bgm.play();
+    bgm.onended(handleEnd);
   }
 }
 
 function handleEnd(){
-  isDone = true;
+  isDone = true; console.log(isDone);
+  logframes = frameCount;
   //playSound = true;
 }
 
@@ -301,6 +325,18 @@ function conversation(){
   wolfConvo.update();
   wolfConvo.display();
 }*/
+
+function convoScene(r, g, b, alph) {
+  fill(r, g, b);
+  //fill(255)
+  noStroke();
+  ellipse(width / 2, 450, 800, 100);
+
+  fill(r, g, b, alph);
+
+  triangle(200, 450, 1000, 450, width / 2, -300);
+}
+
 
 class WoodsGround {
   constructor(r, g, b, start_y, increment) {
@@ -498,13 +534,17 @@ class LittleRedRidingHood {
 }
 
 class Wolf {
-  constructor(start_x, start_y, sizeScale) {
+  constructor(start_x, start_y, sizeScale, r, g, b) {
     this.x = start_x;
     this.y = start_y;
     this.scale = sizeScale;
     
     this.scale1 = 1;
     this.scale_width = 1.10;
+
+    this.r = r;
+    this.g = g;
+    this.b = b;
   }
   
     update() {
@@ -558,7 +598,7 @@ class Wolf {
     triangle(-170, -30, -125, -70, -145, -30)
     triangle(-170, -30, -160, -70, -195, -30)
     //Eye
-    fill("white")
+    fill(this.r, this.g, this.b)
     triangle(-205, 5, -180, -20, -205, -5)
     pop()
 
@@ -620,5 +660,171 @@ class Raindrop {
     ellipse(0, 0, this.width, this.height);
 
     pop();
+  }
+}
+
+function sequence(){
+
+  background(0);
+
+  textSize(26);
+  textFont(myFont)
+
+  if (bgm.currentTime() <= 1.2) {
+    background(0);
+  } else if (bgm.currentTime() >= 1.2 && bgm.currentTime() <= 5.8) {
+    convoScene(255, 255, 255, 30);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolfConvo.update();
+    wolfConvo.display();
+    fill(255, 255, 255);
+    text("Where are you going, dear child?", width / 2 + 100, height / 2 - 50);
+  } else if (bgm.currentTime() >= 5.8 && bgm.currentTime() <= 10) {
+    convoScene(255, 255, 255, 30);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolfConvo.update();
+    wolfConvo.display();
+    fill(255, 255, 255);
+    text("I'm going to see my grandmother.", width / 2 - 120, height / 2 - 50);
+  } else if (bgm.currentTime() >= 10 && bgm.currentTime() <= 14.6) {
+    convoScene(255, 255, 255, 30);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolfConvo.update();
+    wolfConvo.display();
+    fill(255, 255, 255);
+    text("Does she live far off?", width / 2 + 100, height / 2 - 50);
+  } else if (bgm.currentTime() >= 14.6 && bgm.currentTime() <= 16.8) {
+    convoScene(255, 255, 255, 30);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolfConvo.update();
+    wolfConvo.display();
+    fill(255, 255, 255);
+    text("Oh not very!", width / 2 - 150, height / 2 - 50);
+  } else if (bgm.currentTime() >= 16.8 && bgm.currentTime() <= 20.2) {
+    convoScene(255, 255, 255, 30);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolfConvo.update();
+    wolfConvo.display();
+    fill(255, 255, 255);
+    text(
+      "Just on the other side of the wood.",
+      width / 2 - 120,
+      height / 2 - 50
+    );
+  } else if (bgm.currentTime() >= 20.2 && bgm.currentTime() <= 21.25) {
+    convoScene(255, 255, 255, 30);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolfConvo.update();
+    wolfConvo.display();
+    
+  } else if (bgm.currentTime() >= 21.25 && bgm.currentTime() <= 25.7) {
+    convoScene(248, 0, 0, 90);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolf2Convo.update();
+    wolf2Convo.display();
+    fill(0, 0, 0);
+    text("I'll go and see her too!", width / 2 + 100, height / 2 - 50);
+  } else if (bgm.currentTime() >= 25.7 && bgm.currentTime() <= 30) {
+    convoScene(248, 0, 0, 90);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolf2Convo.update();
+    wolf2Convo.display();
+    fill(0, 0, 0);
+    text(
+      "I'll go this way and you go that way.",
+      width / 2 + 100,
+      height / 2 - 50
+    );
+  } else if (bgm.currentTime() >= 30 && bgm.currentTime() <= 34.45) {
+    convoScene(248, 0, 0, 90);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolf2Convo.update();
+    wolf2Convo.display();
+    fill(0, 0, 0);
+    text(
+      "And let's see who will get there first!",
+      width / 2 + 100,
+      height / 2 - 50
+    );
+  } else if (bgm.currentTime() >= 34.45 && bgm.currentTime() <= 36.6) {
+    convoScene(248, 0, 0, 90);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolf2Convo.update();
+    wolf2Convo.display();
+    fill(255, 255, 255);
+    text("Very well.", width / 2 - 150, height / 2 - 50);
+  } else if (bgm.currentTime() >= 36.6 && bgm.currentTime() <= 39) {
+    convoScene(248, 0, 0, 90);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolf2Convo.update();
+    wolf2Convo.display();
+    fill(255);
+    //textSize(30);
+    text("I will do as you say.", width / 2 - 130, height / 2 - 50);
+  
+  }else if (bgm.currentTime() >= 39 && bgm.currentTime() <= 40.1) {
+    convoScene(248, 0, 0, 90);
+    littleRedConvo.update();
+    littleRedConvo.display();
+    wolf2Convo.update();
+    wolf2Convo.display();
+
+  } else if (bgm.currentTime() >= 40.1 && bgm.currentTime() <= 41) {
+    background(0);
+  } else if (bgm.currentTime() >= 41 && bgm.currentTime() <= 43.3) {
+    fill(255, 0, 0);
+    textSize(50)
+    text("And so they parted separate ways.", width / 2, height / 2);
+
+  }else if (bgm.currentTime() >= 43.3 && bgm.currentTime() <= 47.7) {
+    fill(255, 0, 0);
+    textSize(50)
+    text("The wolf ran as fast as he could.", width / 2, height / 2);  
+    
+  } else if (bgm.currentTime() >= 47.7 && bgm.currentTime() <= 52) {
+    fill(255, 0, 0);
+    textSize(50)
+    text(
+      "It was not long before he arrived",width / 2,height / 2 - 30 );
+    text("at the old woman's house.",width / 2,height / 2 + 30);
+  } else if (bgm.currentTime() >= 52 && bgm.currentTime() <= 56.5) {
+    fill(255, 0, 0);
+    textSize(50)
+    text(
+      "Where he instantly",width / 2,height / 2 - 30 );
+    text("fell upon her and devoured her.",width / 2,height / 2 + 30);
+  }
+  
+  
+  else if (bgm.currentTime() >= 56.5 && bgm.currentTime() <= 59.75) {
+    fill(255, 0, 0)
+    textSize(50)
+    text("Soon afterwards,", width / 2, height / 2 - 30);
+    text("the unsuspecting Little Red Riding Hood...",width / 2,height / 2 + 30);
+  } else if (bgm.currentTime() >= 59.75 && bgm.currentTime() <= 60.98) {
+    //text("...arrived", width / 2, height / 2);
+    background(0)
+  }else if (bgm.currentTime() >= 60.98 && bgm.currentTime() <= 63.25) {
+    fill(255, 0, 0)
+    textSize(50)
+    text("...arrived", width / 2, height / 2);
+  } else if (bgm.currentTime() >= 63.25) {
+    background(0)
+    //fill(255)
+    //textSize(50)
+    //text("Go to next page", width / 2, height / 2);
+
+    //logframes = frameCount;
   }
 }

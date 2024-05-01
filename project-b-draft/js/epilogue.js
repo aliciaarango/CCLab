@@ -31,7 +31,7 @@ function setup() {
 
   //bgm.onended(handleEnd);
   
-  myVid = createVideo("assets/bgmEpilogue.mp4")
+  myVid = createVideo("assets/bgmEpilogue_Final.mp4")
   myVid.size(1200, 600);
   myVid.volume(1);
   myVid.noLoop();
