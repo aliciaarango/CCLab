@@ -674,7 +674,7 @@ class Raindrop {
 
 function dialogue() {
   t = [
-    "You look soaked from the rain, my dear.",
+    "You look soaked from the rain, my dear!",
     " Why don’t you take off your wet clothes and climb into bed?",
     "Little Red Riding Hood did as she was told.",
     "Grandmother, what big arms you have...",
@@ -695,8 +695,8 @@ function dialogue() {
   textStyle(NORMAL);
 
   if(bgm.currentTime() > 0 && bgm.currentTime() <= 8){
-    r1 = map(bgm.currentTime(), 0, 8, 0, 150)
-    fill(r1, 0, 0)
+    r1 = map(bgm.currentTime(), 0, 8, 0, 255)
+    fill(r1)
     text("Unbeknownst to Little Red Riding Hood, the food she", width/2, height/2 - 30)
     text("had just consumed was the flesh and blood of her own grandmother.", width/2, height/2 + 30)
   } 
@@ -768,7 +768,7 @@ function dialogue() {
     pop()
 
     
-    //background(0)
+
     
   } else if (bgm.currentTime() > 52.3 && bgm.currentTime() <= 54) {
     fill(255, 0, 0);
@@ -787,9 +787,9 @@ function dialogue() {
     //pop()
     image(myImage, 0, 0, 1200, 600);
     
-  } else {
+  } //else {
     //trigger = true;
-  }
+  //}
 }
 
 function handleEnd(){

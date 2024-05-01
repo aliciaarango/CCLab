@@ -29,6 +29,10 @@ let playSequence = false;
 //Sequence global variable
 let appearWolf = false;
 
+//Go to next chapter boolean
+let nextChapter = false;
+let logframes = 0;
+
 function preload() {
   mySound = loadSound("assets/rain.mp3");
   myBgMusic = loadSound("assets/bgSpookyMusic.mp3")
@@ -46,8 +50,8 @@ function setup() {
   myBgMusic.play();
   myBgMusic.setVolume(0.8);
 
-  mySound.play()
-  mySound.setVolume(0.2)
+  mySound.play();
+  mySound.setVolume(0.2);
   
   curveVol = 0;
 
@@ -115,7 +119,7 @@ function draw() {
   background(55);
 
 
-  /*if(!mySound.isPlaying()){
+ /* if(!mySound.isPlaying()){
     mySound.loop()
     ifQuiet = true;
   }
@@ -241,7 +245,7 @@ for (let i = 0; i < 5; i++) {
     
   }
 
-  if(littleRed.x >= 1100){
+  if(littleRed.x >= width){
     playSequence = true;
   }
   
@@ -249,15 +253,45 @@ for (let i = 0; i < 5; i++) {
     background(0);
     myBgMusic.pause();
     mySound.pause();
+
+    if(!bgm.isPlaying()){
+      bgm.play();
+      //bgm.onended(handleEnd);
+      //bgm.noLoop();
+      playSequence = false;
+      littleRed.x = -100;
+    }
     //textAlign(CENTER, CENTER);
     //translate(width/2, height/2);
     //fill(255, 255, 255);
     //text("Insert coded sequence", 0, 0)
+  }
+  if(bgm.isPlaying()){
     push()
     sequence();
+    littleRed.x = -100;
     pop();
+  } 
+
+  if(nextChapter){
+    background(0);
+    fill(255)
+    textAlign(CENTER, CENTER)
+    textSize(36)
+    let r = map(frameCount, logframes, logframes + 100, 0, 255)
+    fill(r);
+    text("Go to next chapter", width/2, height/2)
   }
+
 }
+
+/*function handleEnd(){
+    background(0);
+    fill(255)
+    textAlign(CENTER, CENTER)
+    textSize(36)
+    text("Go to next chapter", width/2, height/2)
+}*/
 
 function narration() {
   background(0);
@@ -1027,6 +1061,7 @@ function redBackground(){
 }
 
 function sequence(){
+  background(0);
   
   t = ["What's that?", "I hear something", "I'm being stalked", "Keep calm", "What should I do?", "I'm scared", "Run", "Keep running", "Don't look back", "Keep running", "Keep running", "Keep running", "Go to next chapter"]
   
@@ -1130,11 +1165,13 @@ function sequence(){
 
     redBackground()
   
-  } else if(!bgm.isPlaying()){
-    fill(255)
+  } else if(bgm.currentTime() >= 57){
+    nextChapter = true;
+    logframes = frameCount;
+    /*fill(255)
     textAlign(CENTER, CENTER)
     textSize(36)
-    text(t[12], width/2, height/2)
+    text(t[12], width/2, height/2)*/
   }
   
 }

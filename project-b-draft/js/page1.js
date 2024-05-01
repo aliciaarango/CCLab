@@ -101,7 +101,7 @@ function draw() {
   image(myImage, 0, 0, 1200, 600)
 
   if(myHarp.currentTime() <= 12){
-  fill(0)
+  fill("brown")
   text("Once upon a time, there lived in a certain village a little country girl.", width/2, height/2 - 60)
   text("Her mother was excessively fond of her; and her grandmother doted on her still more.", width/2, height/2)
   text("This good woman had a little red riding hood made for her. It suited the", width/2, height/2 + 60)
