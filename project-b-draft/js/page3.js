@@ -283,7 +283,7 @@ pop()
   textFont(myFont);
   //translate(width/2, height/2);
 
-    let r = map(frameCount, logframes + 50, logframes + 250, 0, 255)
+    let r = map(frameCount, logframes + 50, logframes + 200, 0, 255)
     fill(r);
     text("Go to next chapter", width/2, height/2);
   }
