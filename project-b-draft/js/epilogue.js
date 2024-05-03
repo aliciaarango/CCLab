@@ -13,7 +13,7 @@ function preload(){
   
   myFont = loadFont("assets/font.ttf")
   myImage1 = loadImage("assets/LRRH1.png")
-  bgm = loadSound("assets/bgmEpilogue.mp3")
+  //bgm = loadSound("assets/bgmEpilogue.mp3")
 
 }
 
@@ -31,7 +31,8 @@ function setup() {
 
   //bgm.onended(handleEnd);
   
-  myVid = createVideo("assets/bgmEpilogue_Final.mp4")
+  //myVid = createVideo("assets/bgmEpilogue_Final.mp4")
+  myVid = createVideo("assets/bgmEpilogue_Final1.mp4")
   myVid.size(1200, 600);
   myVid.volume(1);
   myVid.noLoop();
