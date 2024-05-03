@@ -174,7 +174,7 @@ function draw() {
   littleRed.update();
   littleRed.display();
   
-   if (keyIsPressed == true) {
+   if (keyIsPressed == true && instructions1Visible == false) {
     if (keyCode === RIGHT_ARROW) {
       littleRed.left_leg = -littleRed.speed1 / 10;
       littleRed.right_leg = littleRed.speed1 / 10
@@ -431,7 +431,7 @@ class LittleRedRidingHood {
   constructor(startX, startY, scaling) {
     this.x = startX;
     this.y = startY;
-    this.xSpd = 0.9;
+    this.xSpd = 1.2;
     this.left_leg = 0;
     this.right_leg = 0;
 

@@ -11,8 +11,13 @@ let speedx = -0.2;
 let speedy1 = -0.2;
 let speedy2 = 0.2;
 
+let xPos = 10;
+let s = 1;
+
 let rain = [];
 let particles = [];
+
+let instructions1Visible = true;
 
 //Assets variables
 let mySound;
@@ -66,7 +71,8 @@ function setup() {
 
   foreGround = new WoodsGround(17, 17, 17, 380, 0.01);
 
-  littleRed = new LittleRedRidingHood(10, 550, 0.55);
+  //littleRed = new LittleRedRidingHood(10, 550, 0.55);
+  littleRed = new LittleRedRidingHood(0, 0, 0.55);
 
   //Sequence sketch
 
@@ -195,25 +201,81 @@ for (let i = 0; i < 5; i++) {
     }
   }
   //console.log(particles.length)
+
+  push();
+  translate(xPos, 550);
+  scale(s, 1);
+  littleRed.update();
+  littleRed.display();
+  pop();
+
+  push()
+  if (keyIsPressed == true && instructions1Visible == false) {
+    if (keyCode === RIGHT_ARROW) {
+      s = 1;
+      littleRed.left_leg = -littleRed.speed1 / 10;
+      littleRed.right_leg = littleRed.speed1 / 10;
+      xPos += littleRed.xSpd;
+    } else if (keyCode === LEFT_ARROW) {
+      s = -1;
+      littleRed.left_leg = -littleRed.speed1 / 10;
+      littleRed.right_leg = littleRed.speed1 / 10;
+      xPos -= littleRed.xSpd;
+    }
+  }
+  pop()
     
     
-    littleRed.update();
-    littleRed.display();
+    //littleRed.update();
+    //littleRed.display();
 
     backgroundTrees.display();
 
     foreGround.display();
     pop();
+
+    push()  
+    if (instructions1Visible) {
+      fill(242, 150);
+      stroke(242, 150);
+      rectMode(CENTER)
+      rect(width / 2, height / 2 - 5, 400, 150, 10);
+      fill(0);
+      noStroke()
+      variable = map(sin(frameCount/50), -1, 1, 24, 26);
+      textAlign(CENTER, CENTER)
+      textSize(22);
+      textStyle(BOLD)
+      textFont("Ariel")
+      text(
+        "Keep heading to grandmother's house.",
+        width / 2,
+        height / 2 - 35
+      );
+      textStyle(NORMAL)
+      textSize(15)
+      text("Press arrow keys to move", width / 2, height / 2);
+      fill(0);
+      rect(width / 2, height / 2 + 35, 60, 30);
+      fill(255);
+  
+      textSize(18);
+      fill(255)
+      text("start", width / 2, height / 2 + 35);
+    }
+  pop()
+
+
     noStroke();
     push();
 
 //Wolf Eye
     push();
-    let xc1 = constrain(littleRed.x -5, 157, 243);
-    let xs1 = constrain(littleRed.y -5, 130, 170);
+    let xc1 = constrain(xPos -5, 157, 243);
+    let xs1 = constrain(550 -5, 130, 170);
 
-    let xc2 = constrain(littleRed.x - 15, 135, 225);
-    let xs2 = constrain(littleRed.y - 15, 120, 160);
+    let xc2 = constrain(xPos - 15, 135, 225);
+    let xs2 = constrain(550 - 15, 120, 160);
 
     noStroke();
     drawingContext.shadowBlur = 30;
@@ -245,7 +307,7 @@ for (let i = 0; i < 5; i++) {
     
   }
 
-  if(littleRed.x >= width){
+  if(xPos >= width/2){
     playSequence = true;
   }
   
@@ -259,7 +321,7 @@ for (let i = 0; i < 5; i++) {
       //bgm.onended(handleEnd);
       //bgm.noLoop();
       playSequence = false;
-      littleRed.x = -100;
+      xPos = -100;
     }
     //textAlign(CENTER, CENTER);
     //translate(width/2, height/2);
@@ -269,7 +331,7 @@ for (let i = 0; i < 5; i++) {
   if(bgm.isPlaying()){
     push()
     sequence();
-    littleRed.x = -100;
+    xPos = -100;
     pop();
   } 
 
@@ -283,6 +345,13 @@ for (let i = 0; i < 5; i++) {
     text("Go to next chapter", width/2, height/2)
   }
 
+}
+
+function mousePressed(){
+  let d1 = dist(mouseX, mouseY, width / 2 , height / 2 + 35);
+if (d1 < 20) {
+  instructions1Visible = false;
+}
 }
 
 /*function handleEnd(){
@@ -504,7 +573,7 @@ function brush(r, g, b, x, y) {
 }
 
 
-class LittleRedRidingHood {
+/*class LittleRedRidingHood {
   constructor(startX, startY, scaling) {
     this.x = startX;
     this.y = startY;
@@ -605,7 +674,113 @@ class LittleRedRidingHood {
 
     pop();
   }
+}*/
+
+class LittleRedRidingHood {
+  constructor(startX, startY, scaling) {
+    this.x = startX;
+    this.y = startY;
+    this.xSpd = 0.9;
+    this.left_leg = 0;
+    this.right_leg = 0;
+
+    this.scale = 1;
+    this.scale_width = 1.15;
+
+    this.scaling = scaling;
+  }
+
+  update() {
+    this.speed4 = map(cos(frameCount / 20), -1, 1, -0.3, 0.3);
+    this.speed1 = sin(frameCount / 20);
+    //this.y += this.speed4 / 4;
+
+    this.scale_width += this.speed4 / 280;
+
+    //this.x += this.xSpd;
+  }
+
+  display() {
+    push();
+    translate(this.x, this.y);
+
+    scale(this.scaling);
+
+    push();
+
+    // scale(this.scale, this.scale_width);
+
+    //Legs
+    push();
+    noStroke();
+    rotate(this.left_leg);
+    fill("black");
+    ellipse(-5, 20, 8, 60);
+    pop();
+    push();
+    noStroke();
+    fill("black");
+    rotate(this.right_leg);
+    ellipse(-5, 20, 8, 60);
+    pop();
+
+    scale(this.scale, this.scale_width);
+
+    //Head
+    noStroke();
+    fill("white");
+    ellipse(0, -48, 30);
+    fill("black");
+    stroke(0);
+    bezier(12, -58, -2, -70, -23, -55, -12, -38);
+    line(12, -58, -12, -38);
+
+    //Eye
+    noStroke();
+    fill("black");
+    ellipse(8, -48, 4, 8);
+    fill(255);
+    ellipse(9, -49, 2, 2);
+
+    //Skirts
+    beginShape();
+    //stroke(80, 0, 0)
+    fill(168, 0, 0);
+    stroke(80, 0, 0);
+    strokeWeight(0.5);
+    curveVertex(33, 30);
+    curveVertex(33, 30);
+    curveVertex(15, -20);
+    curveVertex(0, -30);
+    curveVertex(-15, -20);
+    curveVertex(-33, 30);
+    curveVertex(-33, 30);
+    endShape();
+    arc(0, 29, 66, 15, 0, PI);
+
+    push();
+    translate(5, -45);
+    beginShape();
+
+    fill(168, 0, 0);
+    curveVertex(0, 10);
+    curveVertex(0, 10);
+    curveVertex(0, -10);
+    curveVertex(0, -20);
+    curveVertex(-12, -20);
+    curveVertex(-25, -8);
+    curveVertex(-32, 10);
+    curveVertex(-32, 10);
+    endShape();
+    arc(-16, 9, 32, 16, 0, PI);
+    pop();
+
+    pop();
+
+    pop();
+  }
 }
+
 
 class Raindrop {
   // constructor function

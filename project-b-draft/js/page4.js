@@ -3,6 +3,7 @@ let instr1 = false;
 let instr2 = false;
 let button1Pressed = false;
 let button2Pressed = false;
+let button3Pressed = false;
 let faceRight = true;
 
 let indoorRain;
@@ -208,7 +209,7 @@ function draw() {
     s = -1;
       littleRedRight.left_leg = -littleRedRight.speed1 / 10;
       littleRedRight.right_leg = littleRedRight.speed1 / 10;
-          x -= littleRedRight.xSpd;
+        x -= littleRedRight.xSpd;
 
   
     }
@@ -252,14 +253,14 @@ function draw() {
   if (
     button1Pressed &&
     instr1 &&
-    button2Pressed == false &&
+    button2Pressed == false && button3Pressed == false &&
     dist(x, 450, 750, 350) < 200
   ) {
     push()
     fill(20, 200);
     stroke(20, 200);
     rectMode(CENTER);
-    rect(750 -45, 350 - 160, 500, 150, 10);
+    rect(750 -45, 350 - 160, 500, 200, 10);
     pop()
     textStyle(BOLD);
     textFont("Ariel", 22)
@@ -268,9 +269,21 @@ function draw() {
     //stroke(200, 0, 0)
     //textFont("Courier New", 20);
     textStyle(NORMAL);
-    text("I'm so glad to see you, dear!", 750 - 45, 350 - 200);
-    text("You must be tired. Why don't you first eat", 750 - 45, 350 - 160);
-    text("the food I've prepared for you on the table?", 750 - 45, 350 - 120);
+    text("I'm so glad to see you, dear!", 750 - 45, 350 - 220);
+    text("You must be tired. Why don't you first eat", 750 - 45, 350 - 180);
+    text("the food I've prepared for you on the table?", 750 - 45, 350 - 140);
+
+   push() 
+    //textSize(15);
+   // text("Press arrow keys to move", 750 - 45, 350 - 100);
+    fill(0);
+    rectMode(CENTER)
+    rect(750 - 45, 350 - 95, 60, 30, 10);
+
+    textSize(15);
+    fill(180);
+    text("Ok", 750 - 45, 350 - 95);
+    pop()
   }
 
   if (button1Pressed && instr1 &&
@@ -341,6 +354,11 @@ function mousePressed() {
   if (d2 < 20) {
     button2Pressed = true;
   }
+
+  let d3 = dist(mouseX, mouseY, 750 - 45, 350 - 95);
+  if(d3 < 20){
+    button3Pressed = true;
+  }
 }
 
 function keyPressed() {
@@ -409,7 +427,7 @@ class LittleRedRidingHoodRight {
   constructor(startX, startY, scaling) {
     this.x = startX;
     this.y = startY;
-    this.xSpd = 0.9;
+    this.xSpd = 1.5;
     this.left_leg = 0;
     this.right_leg = 0;
 
@@ -510,7 +528,7 @@ class LittleRedRidingHoodRight {
   }
 }
 
-class LittleRedRidingHoodLeft {
+/*class LittleRedRidingHoodLeft {
   constructor(startX, startY, scaling) {
     this.x = startX;
     this.y = startY;
@@ -612,7 +630,7 @@ class LittleRedRidingHoodLeft {
 
     pop();
   }
-}
+}*/
 
 
 class Raindrop {

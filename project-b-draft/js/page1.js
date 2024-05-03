@@ -525,7 +525,7 @@ class LittleRedRidingHoodRight {
   constructor(startX, startY, scaling, r, g, b, rHead, gHead, bHead, red, rHair, gHair, bHair) {
     this.x = startX;
     this.y = startY;
-    this.xSpd = 0.9;
+    this.xSpd = 1.2;
     this.left_leg = 0;
     this.right_leg = 0;
     this.r = r;
