@@ -13,14 +13,23 @@ let rain = [];
 let rainFall;
 let thunder;
 let playSound = false;
+let footsteps;
+
 let instructions1Visible = true;
 
+let skipText = false;
+let buttonPressed = false;
+let goHome = false;
+
 function preload(){
-  birds = loadSound("assets/birds.mp3")
-  rainFall = loadSound("assets/rain.mp3")
-  myFont = loadFont("assets/font.ttf")
-  myHarp = loadSound("assets/harp.mp3")
-  myImage = loadImage("assets/bgPage2.jpg")
+  birds = loadSound("assets/birds.mp3");
+  rainFall = loadSound("assets/rain.mp3");
+  myFont = loadFont("assets/font.ttf");
+  myHarp = loadSound("assets/harp.mp3");
+  myImage = loadImage("assets/bgPage2.jpg");
+  //footsteps = loadSound("assets/footstepsDirt.mp3")
+  //footsteps = loadSound("assets/footstepsDirt_1.mp3");
+  footsteps = loadSound("assets/footstepsDirt_2.mp3");
 
 }
 
@@ -92,6 +101,7 @@ function draw() {
     
     if(!myHarp.isPlaying()){
        myHarp.play();
+       //myHarp.noLoop();
     }
   }else{
     myHarp.pause();
@@ -100,22 +110,30 @@ function draw() {
   background(226,185,121);
   image(myImage, 0, 0, 1200, 600)
 
-  if(myHarp.currentTime() <= 12){
+  //if((myHarp.currentTime() <= 12) && skipText == false){
+  if((myHarp.currentTime() <= 12) && skipText == false){
+  textSize(36)
   fill("brown")
   text("Once upon a time, there lived in a certain village a little country girl.", width/2, height/2 - 60)
   text("Her mother was excessively fond of her; and her grandmother doted on her still more.", width/2, height/2)
-  text("This good woman had a little red riding hood made for her. It suited the", width/2, height/2 + 60)
+  text("This good woman had a red riding hood made for her. It suited the", width/2, height/2 + 60)
   text("girl so well that everybody called her Little Red Riding Hood.", width/2, height/2 + 120)
+  textSize(26)
+  text("Press 's' to skip", width/2, 500)
   }
-  else if(myHarp.currentTime() > 12 && myHarp.currentTime() <= 24){
-      text("One day her mother, having made some cakes, said to her:", width/2, height/2 - 120)
+  //else if((myHarp.currentTime() > 12 && myHarp.currentTime() <= 24) && skipText == false){
+  else if((myHarp.currentTime() > 12 && myHarp.currentTime() <= 24) && skipText == false){
+    textSize(36)
+    text("One day her mother, having made some cakes, said to her:", width/2, height/2 - 120)
   text("Go, my dear, and see how your grandmother is doing, for", width/2, height/2 - 60)
   text("I hear she has been very ill. Take her a cake, and this little pot of butter.", width/2, height/2)
   text("Little Red Riding Hood thus set out to go visit her grandmother,", width/2, height/2 + 60)
     text("who lived on the other side of the wood...", width/2, height/2 + 120)
+    textSize(26)
+    text("Press 's' to skip", width/2, 500)
     
-  } else{
-
+  //} else if(myHarp.currentTime() >= 24 || skipText == true){
+  } else if(myHarp.currentTime() >= 24 || skipText == true){
   lightBackground();
   
   if(sceneFlip === false){
@@ -141,12 +159,30 @@ function draw() {
       littleRedRight.left_leg = -littleRedRight.speed1 / 10;
       littleRedRight.right_leg = littleRedRight.speed1 / 10;
       x += littleRedRight.xSpd;
-    } else if (keyCode === LEFT_ARROW) {
+      if(!footsteps.isPlaying()){
+        footsteps.play();
+        //footsteps.loop();
+      }
+      }
+
+      /*s = 1;
+      littleRedRight.left_leg = -littleRedRight.speed1 / 10;
+      littleRedRight.right_leg = littleRedRight.speed1 / 10;
+      x += littleRedRight.xSpd;*/
+    else if (keyCode === LEFT_ARROW) {
       s = -1;
       littleRedRight.left_leg = -littleRedRight.speed1 / 10;
       littleRedRight.right_leg = littleRedRight.speed1 / 10;
       x -= littleRedRight.xSpd;
+
+      if(!footsteps.isPlaying()){
+        footsteps.play();
+        //footsteps.loop();
+      }
+    }else{
+      footsteps.pause();
     }
+    
   }
 
   lightForeground();
@@ -183,12 +219,81 @@ pop()
   
   
   
+push()
+  if (x >= width/2 - 10 && instructions1Visible == false && buttonPressed == false) {
 
-  if (x >= width/2) {
-    sceneFlip = true;
-    playSound = true;
+    fill(242, 200);
+    stroke(242, 180);
+    rectMode(CENTER)
+    rect(width / 2, height / 2, 400, 150, 10);
+    fill("darkgreen");
+    noStroke()
+    variable = map(sin(frameCount/50), -1, 1, 24, 26);
+    textAlign(CENTER, CENTER)
+    textSize(22);
+    textFont("Ariel")
+    text(
+      "Uh oh! The weather is growing bad.",
+      width / 2,
+      height / 2 - 35
+    );
+    text("Do you want to continue or go home?", width/2, height/2)
+
+    textSize(15)
+    //text("Press arrow keys to move", width / 2, height / 2);
+    fill("green");
+    rect(width / 2 - 60, height / 2 + 40, 60, 30);
+    fill(255);
+
+    textSize(14);
+    text("Continue", width / 2 - 60, height / 2 + 40);
+
+    fill("green");
+    rect(width / 2 + 60, height / 2 + 40, 60, 30);
+    fill(255);
+
+    textSize(14);
+    text("Go home", width / 2 + 60, height / 2 + 40);
+  
+
+    //sceneFlip = true;
+    //playSound = true;
   }
-    
+  pop()  
+push()
+  if(buttonPressed && goHome){
+    if(x <= 100){
+      fill(242);
+    stroke(242, 180);
+    rectMode(CENTER)
+    rect(width / 2, height / 2, width, height, 10);
+    fill("red");
+    noStroke()
+    variable = map(sin(frameCount/50), -1, 1, 24, 26);
+    textAlign(CENTER, CENTER)
+    textSize(40);
+    textStyle(BOLD);
+    textFont("Ariel")
+    text(
+      "Oh no!", width / 2, height / 2 - 60);
+
+      text("You've been scolded by mother for coming home.", width/2, height/2)
+
+    textSize(36)
+    text("Press 'r' to return to forest.", width / 2, height / 2 + 60);
+    //fill("green");
+    //rect(width / 2, height / 2 + 35, 60, 30);
+    //fill(255);
+
+    //textSize(18);
+    //text("start", width / 2, height / 2 + 35);
+  }
+    }
+
+    pop()
+  }
+
+
   if(sceneFlip){  
   
       background(150, 150, 150);
@@ -212,6 +317,7 @@ pop()
   }
     darkBackground();
     push();
+    xDark = x;
     translate(xDark, 465);
     scale(s, 1);
     littleRedRightDark.update();
@@ -232,7 +338,7 @@ pop()
       }
     }
 
-    darkForeground();}
+    darkForeground();
   }
   
     if(playSound){
@@ -257,23 +363,50 @@ pop()
   if(xDark >= width){
     background(0)
     fill(255)
+    textSize(36)
     text("Go to next chapter", width/2, height/2)
+  }
+}
+
+function keyPressed() {
+  if (key == "s") {
+    skipText = true; console.log(skipText)
+  }
+
+  if (key == "r"){
+    buttonPressed = true;
+    sceneFlip = true;
+    playSound = true;
   }
 }
 
 function mousePressed(){
     let d1 = dist(mouseX, mouseY, width / 2 , height / 2 + 35);
-  if (d1 < 20) {
+  if (d1 < 10) {
     instructions1Visible = false;
+  }
+
+  let d2 = dist(mouseX, mouseY, width / 2 - 60, height / 2 + 40);
+  if(d2 < 10){
+    buttonPressed = true;
+    sceneFlip = true;
+    playSound = true;
+  }
+
+  let d3 = dist(mouseX, mouseY, width / 2 + 60, height / 2 + 40);
+  if(d3 < 10){
+    buttonPressed = true;
+    goHome = true;
   }
 }
 
 function darkBackground() {
 
-  
+  backgroundTreesDark.update();
   backgroundTreesDark.display();
   backGroundDark.display();
 
+  midgroundTreesDark.update();
   midgroundTreesDark.display();
   midGround1Dark.display();
   midGround2Dark.display();
@@ -282,29 +415,38 @@ function darkBackground() {
 }
 
 function darkForeground() {
+  foregroundTreesDark.update();
   foregroundTreesDark.display();
   foreGroundDark.display();
-
+  treeLeavesDark.update();
   treeLeavesDark.display();
 }
 
 function lightBackground() {
   background(197, 229, 127);
 
+  backgroundTrees.update();
   backgroundTrees.display();
+  //backGround.update();
   backGround.display();
 
+  midgroundTrees.update();
   midgroundTrees.display();
+  //midGround1.update();
   midGround1.display();
+ // midGround2.update();
   midGround2.display();
 
+  //road.update();
   road.display();
 }
 
 function lightForeground() {
+  foregroundTrees.update();
   foregroundTrees.display();
+  //foreGround.update();
   foreGround.display();
-
+  treeLeaves.update();
   treeLeaves.display();
 }
 
@@ -320,6 +462,13 @@ class Trees1 {
     this.treeHeight = treeHeight;
   }
 
+  update(){
+    push()
+    this.startPos += map(sin(frameCount/20), -1, 1, -0.05, 0.05)
+    this.endPos += map(sin(frameCount/20), -1, 1, -0.05, 0.05)
+    pop()
+  }
+
   display() {
     for (let j = this.startPos; j < this.endPos; j += this.increment) {
       noStroke();
@@ -327,18 +476,18 @@ class Trees1 {
       rect(j, 0, this.treeWidth, this.treeHeight); //tree1-bg
 
       beginShape();
-      curveVertex(j + this.treeWidth, 200);
-      curveVertex(j + this.treeWidth, 200);
+      curveVertex(j + this.treeWidth - 5, 200);
+      curveVertex(j + this.treeWidth - 5, 200);
       curveVertex(j + 195, 100);
-      curveVertex(j + this.treeWidth, 230);
-      curveVertex(j + this.treeWidth, 230);
+      curveVertex(j + this.treeWidth - 5, 230);
+      curveVertex(j + this.treeWidth - 5, 230);
       endShape(); //branch
       beginShape();
-      curveVertex(j, 230);
-      curveVertex(j, 230);
+      curveVertex(j + 5, 230);
+      curveVertex(j + 5, 230);
       curveVertex(j - 150, 100);
-      curveVertex(j, 265);
-      curveVertex(j, 265);
+      curveVertex(j + 5, 265);
+      curveVertex(j + 5, 265);
       endShape(); //branch
     }
   }
@@ -356,6 +505,13 @@ class Trees2 {
     this.treeHeight = treeHeight;
   }
 
+  update(){
+    push()
+    this.startPos += map(cos(frameCount/20), -1, 1, -0.03, 0.03)
+    this.endPos += map(cos(frameCount/20), -1, 1, -0.03, 0.03)
+    pop()
+  }
+
   display() {
     for (let j = this.startPos; j < this.endPos; j += this.increment) {
       noStroke();
@@ -363,18 +519,18 @@ class Trees2 {
       rect(j, 0, this.treeWidth, this.treeHeight); //tree2-bg
 
       beginShape();
-      curveVertex(j, 250);
-      curveVertex(j, 250);
+      curveVertex(j + 3, 250);
+      curveVertex(j + 3, 250);
       curveVertex(j - 50, 200);
-      curveVertex(j, 270);
-      curveVertex(j, 270);
+      curveVertex(j + 3, 270);
+      curveVertex(j + 3, 270);
       endShape(); //branch
       beginShape();
-      curveVertex(j + this.treeWidth, 200);
-      curveVertex(j + this.treeWidth, 200);
+      curveVertex(j + this.treeWidth - 3, 200);
+      curveVertex(j + this.treeWidth - 3, 200);
       curveVertex(j + 80, 150);
-      curveVertex(j + this.treeWidth, 215);
-      curveVertex(j + this.treeWidth, 215);
+      curveVertex(j + this.treeWidth - 3, 215);
+      curveVertex(j + this.treeWidth - 3, 215);
       endShape(); //branch
     }
   }
@@ -392,6 +548,13 @@ class Trees3 {
     this.treeHeight = treeHeight;
   }
 
+  update(){
+    push()
+    this.startPos += map(sin(frameCount/20), -1, 1, -0.02, 0.02)
+    this.endPos += map(sin(frameCount/20), -1, 1, -0.02, 0.02)
+    pop()
+  }
+
   display() {
     for (let k = this.startPos; k < this.endPos; k += this.increment) {
       noStroke();
@@ -399,35 +562,35 @@ class Trees3 {
       rect(k, 0, this.treeWidth, this.treeHeight); //tree bg
 
       beginShape();
-      curveVertex(k + this.treeWidth, 40);
-      curveVertex(k + this.treeWidth, 40);
+      curveVertex(k + this.treeWidth - 1, 40);
+      curveVertex(k + this.treeWidth - 1, 40);
       curveVertex(k + 55, 10);
-      curveVertex(k + this.treeWidth, 50);
-      curveVertex(k + this.treeWidth, 50);
+      curveVertex(k + this.treeWidth -1, 50);
+      curveVertex(k + this.treeWidth - 1, 50);
       endShape(); //branch
 
       beginShape();
-      curveVertex(k + this.treeWidth, 100);
-      curveVertex(k + this.treeWidth, 100);
+      curveVertex(k + this.treeWidth -1, 100);
+      curveVertex(k + this.treeWidth - 1, 100);
       curveVertex(k + 55, 70);
-      curveVertex(k + this.treeWidth, 110);
-      curveVertex(k + this.treeWidth, 110);
+      curveVertex(k + this.treeWidth - 1, 110);
+      curveVertex(k + this.treeWidth - 1, 110);
       endShape(); //branch
 
       beginShape();
-      curveVertex(k + this.treeWidth, 180);
-      curveVertex(k + this.treeWidth, 180);
+      curveVertex(k + this.treeWidth - 1, 180);
+      curveVertex(k + this.treeWidth - 1, 180);
       curveVertex(k + 55, 150);
-      curveVertex(k + this.treeWidth, 190);
-      curveVertex(k + this.treeWidth, 190);
+      curveVertex(k + this.treeWidth -1, 190);
+      curveVertex(k + this.treeWidth -1, 190);
       endShape(); //branch
 
       beginShape();
-      curveVertex(k + this.treeWidth, 260);
-      curveVertex(k + this.treeWidth, 260);
+      curveVertex(k + this.treeWidth -1, 260);
+      curveVertex(k + this.treeWidth -1, 260);
       curveVertex(k + 55, 230);
-      curveVertex(k + this.treeWidth, 270);
-      curveVertex(k + this.treeWidth, 270);
+      curveVertex(k + this.treeWidth -1, 270);
+      curveVertex(k + this.treeWidth - 1, 270);
       endShape(); //branch
     }
   }
@@ -442,6 +605,13 @@ class WoodsGround {
     this.b = b;
     this.minRange = 0;
     this.maxRange = 0;
+  }
+
+  update(){
+    push()
+    this.y += map(cos(frameCount/50), -1, 1, -0.002, 0.002)
+    //this.endPos += map(sin(frameCount/20), -1, 1, -0.04, 0.04)
+    pop()
   }
 
   display() {
@@ -498,6 +668,11 @@ class TreeLeaves {
     this.b = b;
     this.minRange = 0;
     this.maxRange = 0;
+    //this.move = 1
+  }
+
+  update(){
+    this.y = map(sin(frameCount/20), -1, 1, -0.03, 0.03)
   }
 
   display() {

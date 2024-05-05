@@ -18,8 +18,11 @@ let rain = [];
 let particles = [];
 
 let instructions1Visible = true;
+let skipText = false;
+let triggerWarning = false;
 
 //Assets variables
+let footsteps;
 let mySound;
 let myBgMusic;
 let myFont;
@@ -43,6 +46,7 @@ function preload() {
   myBgMusic = loadSound("assets/bgSpookyMusic.mp3")
   myFont = loadFont("assets/font.ttf");
   bgm = loadSound("assets/bgmPage2.mp3")
+  footsteps = loadSound("assets/footstepsDirt_2.mp3");
 }
 
 function setup() {
@@ -139,14 +143,43 @@ function draw() {
       ifQuiet = false;
     }
  }*/
+ //if((myBgMusic.currentTime() <= 5) && skipText == false){
+  if((myBgMusic.currentTime() <= 4.5) && skipText == false){
+  push()
+  background(0)
+  textSize(36)
 
+  fill(255)
+  textAlign(CENTER, CENTER)
+  text("As Little Red Riding Hood trudged onward", width/2, height/2 -30);
+  text("through the woods...", width/2, height/2 + 30);
+  textSize(26)
+  text("Press 's' to skip", width/2, 500)
+  pop()
+  }
+  //else if((myBgMusic.currentTime() > 5 && myBgMusic.currentTime() <= 9) && skipText == false){
+    else if((myBgMusic.currentTime() >= 4.5 && myBgMusic.currentTime() <= 9) && skipText == false){
+    push()
+    background(0)
+    textAlign(CENTER, CENTER)
+    textSize(36)
+    r = map(myBgMusic.currentTime(), 5, 8.5, 255, 108);
+    g = map(myBgMusic.currentTime(), 5, 8.5, 255, 0);
+    b = map(myBgMusic.currentTime(), 5, 8.5, 255, 0);
+    fill(r, g, b);
+    text("...little did she know that a ravenous", width/2, height/2 -30);
+    text("predator had caught wind of her scent...", width/2, height/2 + 30);
+    textSize(26)
+    text("Press 's' to skip", width/2, 500)
+    pop()
+  //}
 
-  if (frameCount <= 450) {
+  //if (frameCount <= 450 && skipText == false) {
 //Opening text
-    narration();
+   // narration();
    
    
-  } else if(frameCount > 450 && playSequence == false) {
+  } else if((myBgMusic.currentTime() >= 9 && playSequence == false) || (skipText == true && playSequence == false)) {
     
     let p = new Raindrop(random(width), 400);
     rain.push(p);
@@ -165,8 +198,6 @@ function draw() {
       }
     }
 
-
-
     push();
     brush(25, 25, 25, width, 20);
     brush(25, 25, 25, 1000, 20);
@@ -179,7 +210,9 @@ function draw() {
     pop();
 
     push();
+    treeLeavesBot.update();
     treeLeavesBot.display();
+
     treeLeavesTop.display();
 
     //stroke("red")
@@ -189,7 +222,7 @@ function draw() {
     brush(17, 17, 17, 300, 150);
 
 for (let i = 0; i < 5; i++) {
-    let p = new Particle(littleRed.x + random(-500, 0), littleRed.y - 10);
+    let p = new Particle(xPos + random(-500, 0), 550 - 10);
     particles.push(p);
   }
   for (let i = particles.length - 1; i >= 0; i--) {
@@ -210,17 +243,31 @@ for (let i = 0; i < 5; i++) {
   pop();
 
   push()
-  if (keyIsPressed == true && instructions1Visible == false) {
+  if (keyIsPressed == true && instructions1Visible == false && xPos >= 0) {
     if (keyCode === RIGHT_ARROW) {
+      triggerWarning = false;
       s = 1;
       littleRed.left_leg = -littleRed.speed1 / 10;
       littleRed.right_leg = littleRed.speed1 / 10;
       xPos += littleRed.xSpd;
+      if(!footsteps.isPlaying()){
+        footsteps.play();
+        //footsteps.loop();
+      }
     } else if (keyCode === LEFT_ARROW) {
-      s = -1;
+      /*s = -1;
       littleRed.left_leg = -littleRed.speed1 / 10;
       littleRed.right_leg = littleRed.speed1 / 10;
       xPos -= littleRed.xSpd;
+      if(!footsteps.isPlaying()){
+        footsteps.play();
+        //footsteps.loop();
+      }*/
+
+      triggerWarning = true;
+
+    }else{
+      footsteps.pause();
     }
   }
   pop()
@@ -228,9 +275,10 @@ for (let i = 0; i < 5; i++) {
     
     //littleRed.update();
     //littleRed.display();
-
+    backgroundTrees.update();
     backgroundTrees.display();
 
+    foreGround.update();
     foreGround.display();
     pop();
 
@@ -254,7 +302,7 @@ for (let i = 0; i < 5; i++) {
       );
       textStyle(NORMAL)
       textSize(15)
-      text("Press arrow keys to move", width / 2, height / 2);
+      text("Press right arrow key to move", width / 2, height / 2);
       fill(0);
       rect(width / 2, height / 2 + 35, 60, 30);
       fill(255);
@@ -265,13 +313,39 @@ for (let i = 0; i < 5; i++) {
     }
   pop()
 
+push()
+if(triggerWarning){
+  fill(0);
+  //stroke(242, 150);
+  rectMode(CENTER)
+  rect(width / 2, height / 2 - 5, 400, 150, 10);
+  fill("red");
+  noStroke()
+  variable = map(sin(frameCount/50), -1, 1, 24, 26);
+  textAlign(CENTER, CENTER)
+  textSize(22);
+  textStyle(BOLD)
+  textFont("Ariel")
+  text(
+    "Warning!",
+    width / 2,
+    height / 2 - 35
+  );
+  textStyle(NORMAL)
+  text("You cannot go back now.", width / 2, height / 2);
+  textSize(15)
+  fill("red");
+  text("Press right arrow key to continue", width / 2, height / 2 + 35);
+
+}
+pop()
 
     noStroke();
     push();
 
 //Wolf Eye
     push();
-    let xc1 = constrain(xPos -5, 157, 243);
+    let xc1 = constrain(xPos -10, 157, 243);
     let xs1 = constrain(550 -5, 130, 170);
 
     let xc2 = constrain(xPos - 15, 135, 225);
@@ -295,7 +369,7 @@ for (let i = 0; i < 5; i++) {
     fill(17);
 
 //Rectangle eyelids
-    if (frameCount >= 450 && frameCount < 730) {
+    if ((frameCount >= logframes && frameCount < logframes + 280) || (myBgMusic.currentTime() >= 9 && myBgMusic.currentTime() < 18)) {
       y1 = y1 + speedy1;
       y2 = y2 + speedy2;
     } else {
@@ -347,6 +421,13 @@ for (let i = 0; i < 5; i++) {
 
 }
 
+function keyPressed() {
+  if (key == "s") {
+    skipText = true; console.log(skipText)
+    logframes = frameCount;
+  }
+}
+
 function mousePressed(){
   let d1 = dist(mouseX, mouseY, width / 2 , height / 2 + 35);
 if (d1 < 20) {
@@ -362,7 +443,7 @@ if (d1 < 20) {
     text("Go to next chapter", width/2, height/2)
 }*/
 
-function narration() {
+/*function narration() {
   background(0);
 
   translate(width / 2, height / 2);
@@ -380,7 +461,7 @@ function narration() {
   } else {
     background(0);
   }
-}
+}*/
 
 class WoodsGround {
   constructor(r, g, b, start_y, increment) {
@@ -391,6 +472,13 @@ class WoodsGround {
     this.b = b;
     this.minRange = 0;
     this.maxRange = 0;
+  }
+
+  update(){
+    push()
+    this.y += map(cos(frameCount/50), -1, 1, -0.002, 0.002)
+    //this.endPos += map(sin(frameCount/20), -1, 1, -0.04, 0.04)
+    pop()
   }
 
   display() {
@@ -421,6 +509,13 @@ class TreesBeginning {
     this.increment = increment;
     this.treeWidth = treeWidth;
     this.treeHeight = treeHeight;
+  }
+
+  update(){
+    push()
+    this.startPos += map(cos(frameCount/20), -1, 1, -0.04, 0.04)
+    this.endPos += map(cos(frameCount/20), -1, 1, -0.04, 0.04)
+    pop()
   }
 
   display() {
@@ -506,6 +601,10 @@ class TreeLeavesBot {
     this.b = b;
     this.minRange = 0;
     this.maxRange = 0;
+  }
+
+  update(){
+    this.y += map(sin(frameCount/50), -1, 1, -0.001, 0.001)
   }
 
   display() {

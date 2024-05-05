@@ -10,6 +10,7 @@ let darken = false;
 
 let currentScene = 1;
 
+let footsteps;
 let rainFall;
 let myFont;
 let forestSound;
@@ -23,11 +24,24 @@ let playSequence = false;
 
 let rain = [];
 
+let xPos = 250;
+let s = 1;
+
+let runAway = false;
+let restart = false;
+
+let myImage;
+let myWolf;
+
 function preload(){
   
   myFont = loadFont("assets/font.ttf")
   rainFall = loadSound("assets/rain.mp3")
   bgm = loadSound("assets/bgmPage3.mp3");
+  footsteps = loadSound("assets/footstepsDirt_2.mp3");
+  myImage = loadImage("assets/bloodSplatter.png")
+  //myWolf = loadSound("assets/wolfSound.mp3");
+  myWolf = loadSound("assets/wolfSounds1.mp3");
 }
 
 function setup() {
@@ -50,6 +64,10 @@ function setup() {
   myVid.hide();*/
   
   //bgm.onended(handleEnd);
+
+  foregroundTreesDark = new Trees1(119, 119, 119, -30, width, 360, 90, height);
+  midgroundTreesDark = new Trees2(51, 51, 51, 70, width, 110, 30, height);
+  backgroundTreesDark = new Trees3(17, 17, 17, 20, width, 110, 20, height);
   
   backGround = new WoodsGround(17, 17, 17, 170, 0.01);
   midGround1 = new WoodsGround(51, 51, 51, 230, 0.01);
@@ -58,9 +76,10 @@ function setup() {
 
   road = new Road(200, 200, 200, 375, 0.01);
 
-  treeLeaves = new TreeLeaves(51, 51, 51, 0, 0.01);
+  treeLeaves = new TreeLeaves(40, 40, 40, 0, 0.01);
   
-  littleRed = new LittleRedRidingHood(100, 455, 0.9);
+  //littleRed = new LittleRedRidingHood(100, 455, 0.9);
+  littleRed = new LittleRedRidingHood(0, 0, 0.9);
 
   wolf = new Wolf(950, 420, 0.4, 255, 255, 255);
 
@@ -104,64 +123,14 @@ function draw() {
     }
   }
   
-  for (let k = 20; k < width; k += 110) {
-    noStroke();
-    fill(17, 17, 17);
-    rect(k, 0, 20, height); //tree bg
-
-    beginShape();
-    curveVertex(k + 20, 40);
-    curveVertex(k + 20, 40);
-    curveVertex(k + 55, 10);
-    curveVertex(k + 20, 50);
-    curveVertex(k + 20, 50);
-    endShape(); //branch
-
-    beginShape();
-    curveVertex(k + 20, 100);
-    curveVertex(k + 20, 100);
-    curveVertex(k + 55, 70);
-    curveVertex(k + 20, 110);
-    curveVertex(k + 20, 110);
-    endShape(); //branch
-
-    beginShape();
-    curveVertex(k + 20, 180);
-    curveVertex(k + 20, 180);
-    curveVertex(k + 55, 150);
-    curveVertex(k + 20, 190);
-    curveVertex(k + 20, 190);
-    endShape(); //branch
-
-    beginShape();
-    curveVertex(k + 20, 260);
-    curveVertex(k + 20, 260);
-    curveVertex(k + 55, 230);
-    curveVertex(k + 20, 270);
-    curveVertex(k + 20, 270);
-    endShape(); //branch
-  }
+  
+  backgroundTreesDark.update();
+  backgroundTreesDark.display();
   backGround.display();
 
-  for (let i = 70; i < width; i += 110) {
-    noStroke();
-    fill(51, 51, 51);
-    rect(i, 0, 30, height); //tree1-bg
-    beginShape();
-    curveVertex(i, 250);
-    curveVertex(i, 250);
-    curveVertex(i - 50, 200);
-    curveVertex(i, 270);
-    curveVertex(i, 270);
-    endShape(); //branch
-    beginShape();
-    curveVertex(i + 30, 200);
-    curveVertex(i + 30, 200);
-    curveVertex(i + 80, 150);
-    curveVertex(i + 30, 215);
-    curveVertex(i + 30, 215);
-    endShape(); //branch
-  }
+
+  midgroundTreesDark.update();
+  midgroundTreesDark.display();
 
   midGround1.display();
   midGround2.display();
@@ -171,56 +140,57 @@ function draw() {
   wolf.update();
   wolf.display();
 
+
+  push();
+  translate(xPos, 455);
+  scale(s, 1);
   littleRed.update();
   littleRed.display();
+  pop();
   
-   if (keyIsPressed == true && instructions1Visible == false) {
+  push()
+  if (keyIsPressed == true && instructions1Visible == false && playSequence == false) {
     if (keyCode === RIGHT_ARROW) {
+      s = 1;
       littleRed.left_leg = -littleRed.speed1 / 10;
-      littleRed.right_leg = littleRed.speed1 / 10
-      littleRed.x += littleRed.xSpd;
-    } else{
-      littleRed.left_leg = 0;
-      littleRed.right_leg = 0;
-      littleRed.x = littleRed.x;
+      littleRed.right_leg = littleRed.speed1 / 10;
+      xPos += littleRed.xSpd;
+      if(!footsteps.isPlaying()){
+        footsteps.play();
+
+      }
+    } else if (keyCode === LEFT_ARROW) {
+      s = -1;
+      littleRed.left_leg = -littleRed.speed1 / 10;
+      littleRed.right_leg = littleRed.speed1 / 10;
+      xPos -= littleRed.xSpd;
+      if(!footsteps.isPlaying()){
+        footsteps.play();
+
+      }
+    }else{
+      footsteps.pause();
     }
   }
+  pop()
   
-    if (dist(littleRed.x, littleRed.y, wolf.x, wolf.y) < 200) {
+    if (runAway == false && (dist(xPos, 455, wolf.x, wolf.y) < 200)) {
   textStyle(BOLD);
   textFont('Courier New', 15);
     text("Press 'a' to talk", wolf.x - 45, wolf.y - 60);
   } 
 
-  for (let j = -30; j < width; j += 360) {
-    noStroke();
-    fill(119, 119, 119);
-    rect(j, 0, 90, height); //tree2-bg
-
-    beginShape();
-    curveVertex(j + 90, 200);
-    curveVertex(j + 90, 200);
-    curveVertex(j + 195, 100);
-    curveVertex(j + 90, 230);
-    curveVertex(j + 90, 230);
-    endShape(); //branch
-    beginShape();
-    curveVertex(j, 230);
-    curveVertex(j, 230);
-    curveVertex(j - 150, 100);
-    curveVertex(j, 265);
-    curveVertex(j, 265);
-    endShape(); //branch
-  }
-  
+  foregroundTreesDark.update();
+  foregroundTreesDark.display();
   foreGround.display();
+  treeLeaves.update();
   treeLeaves.display();
   
   
 
 push()  
   if (instructions1Visible) {
-    fill(242, 180);
+    /*fill(242, 180);
     stroke(242, 180);
     rectMode(CENTER)
     rect(width / 2, height / 2, 400, 150, 10);
@@ -231,7 +201,7 @@ push()
     textSize(25);
     textFont("Ariel")
     text(
-      "Go talk to wolf.",
+      "What do I do?",
       width / 2,
       height / 2 - 35
     );
@@ -243,30 +213,89 @@ push()
     fill(255);
 
     textSize(18);
-    text("start", width / 2, height / 2 + 35);
+    text("start", width / 2, height / 2 + 35);*/
+
+    fill(242, 200);
+    stroke(242, 180);
+    rectMode(CENTER)
+    rect(width / 2, height / 2, 400, 150, 10);
+    fill(0);
+    noStroke()
+    variable = map(sin(frameCount/50), -1, 1, 24, 26);
+    textAlign(CENTER, CENTER)
+    textSize(25);
+    textFont("Ariel")
+    text(
+      "Oh no! What should I do?",
+      width / 2,
+      height / 2 - 35
+    );
+    textSize(18)
+    text("Do you want to talk to the wolf or run away?", width/2, height/2)
+
+    textSize(15)
+    //text("Press arrow keys to move", width / 2, height / 2);
+    fill(0);
+    rect(width / 2 - 70, height / 2 + 40, 65, 30);
+
+    fill(255);
+    textSize(14);
+    text("Talk", width / 2 - 70, height / 2 + 40);
+
+    fill(0);
+    rect(width / 2 + 70, height / 2 + 40, 65, 30);
+
+    fill(255);
+    textSize(14);
+    text("Run away", width / 2 + 70, height / 2 + 40);
+
+
   }
 pop()  
 
-  /*
-  noStroke()
-  fill(0, 0, 0, alpha)
-  rect(0, 0, width, height)
-  if(darken == true){
-    alpha += 2
-  } if(alpha >= 255){
-    background(0);
-  let img = myVid.get();
-  image(img, 0, 0);
-    isReady = true;
+push()
+  if(instructions1Visible == false){
+    if(xPos <= 100 || xPos >= 1150){
+      restart = false;
+      if(restart == false){
+      fill(0);
+    //stroke(242, 180);
+    rectMode(CENTER)
+    rect(width / 2, height / 2, width, height, 10);
+    image(myImage, 0, 0, 1200, 600);
+    fill("red");
+    noStroke()
+    variable = map(sin(frameCount/50), -1, 1, 24, 26);
+    textAlign(CENTER, CENTER)
+    textSize(40);
+    textStyle(BOLD);
+    textFont(myFont);
+    text(
+      "Alas!", width / 2, height / 2 - 80);
+
+      text("The wolf has chased you down and killed you.", width/2, height/2)
+
+    textSize(30)
+    text("Press 'r' to restart.", width / 2, height / 2 + 120);
+    //fill("green");
+    //rect(width / 2, height / 2 + 35, 60, 30);
+    //fill(255);
+
+    //textSize(18);
+    //text("start", width / 2, height / 2 + 35);
+
+    if(!myWolf.isPlaying()){
+      myWolf.play();
+      //footsteps.loop();
+    }
+      }else {
+        myWolf.pause();
+      }
   }
-  
-  if(isReady){
-    forestSound.pause();
-    //myVid.noLoop();
-    myVid.play();
-  }*/  
-  //let img = myVid.get();
-  //image(img, 0, 0);
+    }
+
+    pop()
+
 
   if(playSequence){
     push()
@@ -293,9 +322,15 @@ pop()
 }
 
 function mousePressed(){
-    let d1 = dist(mouseX, mouseY, width / 2 , height / 2 + 35);
+    let d1 = dist(mouseX, mouseY, width / 2 - 70, height / 2 + 40);
   if (d1 < 20) {
     instructions1Visible = false;
+  }
+
+  let d2 = dist(mouseX, mouseY, width / 2 + 70, height / 2 + 40);
+  if (d2 < 20){
+    instructions1Visible = false;
+    runAway = true;
   }
 }
 
@@ -309,26 +344,23 @@ function keyPressed(){
     bgm.play();
     bgm.onended(handleEnd);
   }
+
+  if (key == "r"){
+    runAway = false; console.log(runAway);
+    restart = true;
+    xPos = 250;
+  }
 }
 
 function handleEnd(){
   isDone = true; console.log(isDone);
   logframes = frameCount;
-  //playSound = true;
+
 }
 
-/*
-function conversation(){
-  background(150)
-  littleRedConvo.update();
-  littleRedConvo.display();
-  wolfConvo.update();
-  wolfConvo.display();
-}*/
 
 function convoScene(r, g, b, alph) {
   fill(r, g, b);
-  //fill(255)
   noStroke();
   ellipse(width / 2, 450, 800, 100);
 
@@ -337,6 +369,151 @@ function convoScene(r, g, b, alph) {
   triangle(200, 450, 1000, 450, width / 2, -300);
 }
 
+class Trees1 {
+  constructor(r, g, b, startPos, endPos, increment, treeWidth, treeHeight) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    this.startPos = startPos;
+    this.endPos = endPos;
+    this.increment = increment;
+    this.treeWidth = treeWidth;
+    this.treeHeight = treeHeight;
+  }
+
+  update(){
+    push()
+    this.startPos += map(sin(frameCount/20), -1, 1, -0.05, 0.05)
+    this.endPos += map(sin(frameCount/20), -1, 1, -0.05, 0.05)
+    pop()
+  }
+
+  display() {
+    for (let j = this.startPos; j < this.endPos; j += this.increment) {
+      noStroke();
+      fill(this.r, this.g, this.b);
+      rect(j, 0, this.treeWidth, this.treeHeight); //tree1-bg
+
+      beginShape();
+      curveVertex(j + this.treeWidth - 5, 200);
+      curveVertex(j + this.treeWidth - 5, 200);
+      curveVertex(j + 195, 100);
+      curveVertex(j + this.treeWidth - 5, 230);
+      curveVertex(j + this.treeWidth - 5, 230);
+      endShape(); //branch
+      beginShape();
+      curveVertex(j + 5, 230);
+      curveVertex(j + 5, 230);
+      curveVertex(j - 150, 100);
+      curveVertex(j + 5, 265);
+      curveVertex(j + 5, 265);
+      endShape(); //branch
+    }
+  }
+}
+
+class Trees2 {
+  constructor(r, g, b, startPos, endPos, increment, treeWidth, treeHeight) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    this.startPos = startPos;
+    this.endPos = endPos;
+    this.increment = increment;
+    this.treeWidth = treeWidth;
+    this.treeHeight = treeHeight;
+  }
+
+  update(){
+    push()
+    this.startPos += map(cos(frameCount/20), -1, 1, -0.03, 0.03)
+    this.endPos += map(cos(frameCount/20), -1, 1, -0.03, 0.03)
+    pop()
+  }
+
+  display() {
+    for (let j = this.startPos; j < this.endPos; j += this.increment) {
+      noStroke();
+      fill(this.r, this.g, this.b);
+      rect(j, 0, this.treeWidth, this.treeHeight); //tree2-bg
+
+      beginShape();
+      curveVertex(j + 3, 250);
+      curveVertex(j + 3, 250);
+      curveVertex(j - 50, 200);
+      curveVertex(j + 3, 270);
+      curveVertex(j + 3, 270);
+      endShape(); //branch
+      beginShape();
+      curveVertex(j + this.treeWidth - 3, 200);
+      curveVertex(j + this.treeWidth - 3, 200);
+      curveVertex(j + 80, 150);
+      curveVertex(j + this.treeWidth - 3, 215);
+      curveVertex(j + this.treeWidth - 3, 215);
+      endShape(); //branch
+    }
+  }
+}
+
+class Trees3 {
+  constructor(r, g, b, startPos, endPos, increment, treeWidth, treeHeight) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    this.startPos = startPos;
+    this.endPos = endPos;
+    this.increment = increment;
+    this.treeWidth = treeWidth;
+    this.treeHeight = treeHeight;
+  }
+
+  update(){
+    push()
+    this.startPos += map(sin(frameCount/20), -1, 1, -0.02, 0.02)
+    this.endPos += map(sin(frameCount/20), -1, 1, -0.02, 0.02)
+    pop()
+  }
+
+  display() {
+    for (let k = this.startPos; k < this.endPos; k += this.increment) {
+      noStroke();
+      fill(this.r, this.g, this.b);
+      rect(k, 0, this.treeWidth, this.treeHeight); //tree bg
+
+      beginShape();
+      curveVertex(k + this.treeWidth - 1, 40);
+      curveVertex(k + this.treeWidth - 1, 40);
+      curveVertex(k + 55, 10);
+      curveVertex(k + this.treeWidth -1, 50);
+      curveVertex(k + this.treeWidth - 1, 50);
+      endShape(); //branch
+
+      beginShape();
+      curveVertex(k + this.treeWidth -1, 100);
+      curveVertex(k + this.treeWidth - 1, 100);
+      curveVertex(k + 55, 70);
+      curveVertex(k + this.treeWidth - 1, 110);
+      curveVertex(k + this.treeWidth - 1, 110);
+      endShape(); //branch
+
+      beginShape();
+      curveVertex(k + this.treeWidth - 1, 180);
+      curveVertex(k + this.treeWidth - 1, 180);
+      curveVertex(k + 55, 150);
+      curveVertex(k + this.treeWidth -1, 190);
+      curveVertex(k + this.treeWidth -1, 190);
+      endShape(); //branch
+
+      beginShape();
+      curveVertex(k + this.treeWidth -1, 260);
+      curveVertex(k + this.treeWidth -1, 260);
+      curveVertex(k + 55, 230);
+      curveVertex(k + this.treeWidth -1, 270);
+      curveVertex(k + this.treeWidth - 1, 270);
+      endShape(); //branch
+    }
+  }
+}
 
 class WoodsGround {
   constructor(r, g, b, start_y, increment) {
@@ -404,6 +581,10 @@ class TreeLeaves {
     this.b = b;
     this.minRange = 0;
     this.maxRange = 0;
+  }
+
+  update(){
+    this.y = map(sin(frameCount/20), -1, 1, -0.03, 0.03)
   }
 
   display() {

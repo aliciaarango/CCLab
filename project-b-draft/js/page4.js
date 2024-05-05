@@ -7,6 +7,7 @@ let button3Pressed = false;
 let faceRight = true;
 
 let indoorRain;
+let footsteps;
 let playSound = true;
 
 
@@ -23,16 +24,22 @@ let jumpscare;
 let isDone = false;
 let myImage
 let logframes = 0;
-
+let goHome = false;
+let restart = false;
+let myWolf;
+let eatFood = false;
 
 function preload(){
   
   myFont = loadFont("assets/font.ttf")
   indoorRain = loadSound("assets/indoorRain.mp3")
+  footsteps = loadSound("assets/footstepsWoodFloor.mp3")
 
   bgm = loadSound("assets/bgmPage4.mp3");
   myImage = loadImage("assets/bloodSplatter.png")
   //forestSound = loadSound("assets/forestAmbience.mp3")
+  //myWolf = loadSound("assets/wolfSounds1.mp3");
+  myWolf = loadSound("assets/wolfSoundsPage4.mp3");
 }
 
 function setup() {
@@ -43,6 +50,8 @@ function setup() {
   textSize(36);
   fill(255, 255, 255);
   textFont(myFont);
+
+  footsteps.setVolume(0.2);
   
   foodUneaten = new remainsUneaten(175, 360);
 
@@ -201,7 +210,12 @@ function draw() {
           s = 1;
       littleRedRight.left_leg = -littleRedRight.speed1 / 10;
       littleRedRight.right_leg = littleRedRight.speed1 / 10;
-            x += littleRedRight.xSpd;
+      x += littleRedRight.xSpd;
+
+      if(!footsteps.isPlaying()){
+        footsteps.play();
+      
+      }
 
     } else if (keyCode === LEFT_ARROW) {
 
@@ -210,8 +224,13 @@ function draw() {
       littleRedRight.left_leg = -littleRedRight.speed1 / 10;
       littleRedRight.right_leg = littleRedRight.speed1 / 10;
         x -= littleRedRight.xSpd;
-
+        if(!footsteps.isPlaying()){
+          footsteps.play();
   
+        }
+  
+    }else{
+      footsteps.pause();
     }
   }
 
@@ -257,10 +276,10 @@ function draw() {
     dist(x, 450, 750, 350) < 200
   ) {
     push()
-    fill(20, 200);
-    stroke(20, 200);
+    fill(0, 200);
+    //stroke(20, 200);
     rectMode(CENTER);
-    rect(750 -45, 350 - 160, 500, 200, 10);
+    rect(750 -45, 350 - 150, 500, 200, 10);
     pop()
     textStyle(BOLD);
     textFont("Ariel", 22)
@@ -276,18 +295,78 @@ function draw() {
    push() 
     //textSize(15);
    // text("Press arrow keys to move", 750 - 45, 350 - 100);
-    fill(0);
+   push()
+    fill(20);
     rectMode(CENTER)
-    rect(750 - 45, 350 - 95, 60, 30, 10);
+    rect(750 - 145, 350 - 90, 130, 50, 10);
 
     textSize(15);
-    fill(180);
-    text("Ok", 750 - 45, 350 - 95);
+    fill(200, 0, 0);
+    text("Alright! Thank you", 750 - 145, 350 - 100);
+    text("grandmother!", 750 - 145, 350 - 80);
+    pop()
+
+    push()
+    fill(20);
+    rectMode(CENTER)
+    rect(750 + 50, 350 - 90, 130, 50, 10);
+
+    textSize(15);
+    fill(200, 0, 0);
+    text("Sorry, I need", 750 + 50, 350 - 100);
+    text("to head home.", 750 + 50, 350 - 80);
+    pop()
     pop()
   }
 
+  push()
+  if(button3Pressed == true && goHome){
+    if(x <= -20 || x >= width + 20){
+      restart = false;
+      if(restart == false){
+      fill(0);
+    //stroke(242, 180);
+    rectMode(CENTER)
+    rect(width / 2, height / 2, width, height, 10);
+    //image(myImage, 0, 0, 1200, 600);
+    fill("red");
+    noStroke()
+    variable = map(sin(frameCount/50), -1, 1, 24, 26);
+    textAlign(CENTER, CENTER)
+    textSize(40);
+    textStyle(BOLD);
+    textFont(myFont);
+    text(
+      "Alas!", width / 2, height / 2 - 80);
+
+      text("You were not able to get through the door", width/2, height/2 - 20);
+      text("before the wolf sprung out of bed and killed you.", width/2, height/2 + 40);
+
+    textSize(30)
+    text("Press 'r' to restart.", width / 2, height / 2 + 140);
+    //fill("green");
+    //rect(width / 2, height / 2 + 35, 60, 30);
+    //fill(255);
+
+    //textSize(18);
+    //text("start", width / 2, height / 2 + 35);
+
+    if(!myWolf.isPlaying()){
+      myWolf.play();
+      //footsteps.loop();
+    }
+      }else {
+        myWolf.pause();
+      }
+  }
+    }
+
+    pop()
+
+
+
   if (button1Pressed && instr1 &&
-    instr2 == false &&
+    instr2 == false && eatFood &&
     dist(x, 450, foodUneaten.x, foodUneaten.y) < 200
   ) {
     textStyle(BOLD);
@@ -355,10 +434,19 @@ function mousePressed() {
     button2Pressed = true;
   }
 
-  let d3 = dist(mouseX, mouseY, 750 - 45, 350 - 95);
+  //Choice to eat food or go home
+  let d3 = dist(mouseX, mouseY, 750 - 145, 350 - 90);
   if(d3 < 20){
     button3Pressed = true;
+    eatFood = true;
   }
+
+  let d4 = dist(mouseX, mouseY, 750 + 50, 350 - 90);
+  if (d4 < 20){
+    button3Pressed = true;
+    goHome = true;
+  }
+
 }
 
 function keyPressed() {
@@ -374,6 +462,15 @@ function keyPressed() {
     playSequence = true;
     bgm.play();
     bgm.onended(handleEnd);
+  }
+
+  if (key == "r"){
+    goHome = false;
+    restart = true;
+    button1Pressed = false;
+    button3Pressed = false;
+    s = 1;
+    x = 250;
   }
 }
 
@@ -439,7 +536,7 @@ class LittleRedRidingHoodRight {
 
   update() {
     this.speed4 = map(cos(frameCount / 20), -1, 1, -0.3, 0.3);
-    this.speed1 = sin(frameCount / 20);
+    this.speed1 = sin(frameCount / 15);
     //this.y += this.speed4 / 4;
 
     this.scale_width += this.speed4 / 280;
@@ -527,110 +624,6 @@ class LittleRedRidingHoodRight {
     pop();
   }
 }
-
-/*class LittleRedRidingHoodLeft {
-  constructor(startX, startY, scaling) {
-    this.x = startX;
-    this.y = startY;
-    this.xSpd = 0.9;
-    this.left_leg = 0;
-    this.right_leg = 0;
-
-    this.scale = 1;
-    this.scale_width = 1.15;
-
-    this.scaling = scaling;
-  }
-
-  update() {
-    this.speed4 = map(cos(frameCount / 20), -1, 1, -0.3, 0.3);
-    this.speed1 = sin(frameCount / 20);
-    this.scale_width += this.speed4 / 280;
-    
-    
-  }
-  
-  updatePosition(x){
-    this.x = x;
-  }
-
-  display() {
-    push();
-    translate(this.x, this.y);
-
-    scale(this.scaling);
-
-    push();
-
-    //Legs
-    push();
-    noStroke();
-    rotate(this.left_leg);
-    fill("black");
-    ellipse(5, 20, 8, 60);
-    pop();
-    push();
-    noStroke();
-    fill("black");
-    rotate(this.right_leg);
-    ellipse(5, 20, 8, 60);
-    pop();
-
-    scale(this.scale, this.scale_width);
-
-    //Head
-    noStroke();
-    fill("white");
-    ellipse(0, -48, 30);
-    fill("black");
-    stroke(0);
-    bezier(-12, -58, 2, -70, 23, -55, 12, -38);
-    line(-12, -58, 12, -38);
-
-    //Eye
-    noStroke();
-    fill("black");
-    ellipse(-8, -48, 4, 8);
-    fill(255);
-    ellipse(-9, -49, 2, 2);
-
-    //Skirts
-    beginShape();
-    stroke(80, 0, 0);
-    strokeWeight(0.5);
-    fill(168, 0, 0);
-    curveVertex(33, 30);
-    curveVertex(33, 30);
-    curveVertex(15, -20);
-    curveVertex(0, -30);
-    curveVertex(-15, -20);
-    curveVertex(-33, 30);
-    curveVertex(-33, 30);
-    endShape();
-    arc(0, 29, 66, 15, 0, PI);
-
-    push();
-    translate(5, -45);
-    beginShape();
-
-    fill(168, 0, 0);
-    curveVertex(-8, 10);
-    curveVertex(-8, 10);
-    curveVertex(-8, -10);
-    curveVertex(-8, -20);
-    curveVertex(5, -20);
-    curveVertex(17, -8);
-    curveVertex(24, 10);
-    curveVertex(24, 10);
-    endShape();
-    arc(8, 9, 32, 20, 0, PI);
-    pop();
-
-    pop();
-
-    pop();
-  }
-}*/
 
 
 class Raindrop {
