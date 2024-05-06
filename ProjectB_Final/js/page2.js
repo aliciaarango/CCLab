@@ -61,7 +61,7 @@ function setup() {
 
   mySound.play();
   mySound.setVolume(0.2);
-  
+
   curveVol = 0;
 
 
@@ -81,16 +81,16 @@ function setup() {
   //Sequence sketch
 
   lightning = new Lightning();
-  
-   //Dark themed
-  
-    foregroundTreesDark = new Trees1( 119,119,119,-100,width / 2 - 150,220,90,height);
+
+  //Dark themed
+
+  foregroundTreesDark = new Trees1(119, 119, 119, -100, width / 2 - 150, 220, 90, height);
   midgroundTreesDark = new Trees2(51, 51, 51, 80, width / 2 - 50, 80, 30, height);
   backgroundTreesDark = new Trees3(17, 17, 17, 20, width, 130, 20, height);
 
-  foregroundTrees2Dark = new Trees1(119,119,119,width / 2 + 200,width,220,90,height);
-  midgroundTrees2Dark = new Trees2(51, 51, 51,width / 2 + 150,width,80,30,height);
-  backgroundTrees2Dark = new Trees3(17,17,17,width / 2 + 150,width,110,20,height);
+  foregroundTrees2Dark = new Trees1(119, 119, 119, width / 2 + 200, width, 220, 90, height);
+  midgroundTrees2Dark = new Trees2(51, 51, 51, width / 2 + 150, width, 80, 30, height);
+  backgroundTrees2Dark = new Trees3(17, 17, 17, width / 2 + 150, width, 110, 20, height);
 
   backGroundDark = new WoodsGround(17, 17, 17, 190, 0.01);
   midGround1Dark = new WoodsGround(51, 51, 51, 230, 0.01);
@@ -98,17 +98,17 @@ function setup() {
   foreGroundDark = new WoodsGround(119, 119, 119, 320, 0.01);
 
   treeLeavesDark = new TreeLeaves(17, 17, 17, 0, 0.01);
-  
+
   //Red themed
-  
-      foregroundTreesRed = new Trees1( 0, 0, 0,-100,width / 2 - 150,220,90,height);
+
+  foregroundTreesRed = new Trees1(0, 0, 0, -100, width / 2 - 150, 220, 90, height);
   midgroundTreesRed = new Trees2(64, 0, 0, 80, width / 2 - 50, 80, 30, height);
   backgroundTreesRed = new Trees3(128, 0, 0, 20, width, 130, 20, height);
 
-  
-    foregroundTrees2Red = new Trees1(0, 0, 0,width / 2 + 200,width,220,90,height);
-  midgroundTrees2Red = new Trees2(64, 0, 0,width / 2 + 150,width,80,30,height);
-  backgroundTrees2Red = new Trees3(128, 0, 0,width / 2 + 150,width,50,20,height);
+
+  foregroundTrees2Red = new Trees1(0, 0, 0, width / 2 + 200, width, 220, 90, height);
+  midgroundTrees2Red = new Trees2(64, 0, 0, width / 2 + 150, width, 80, 30, height);
+  backgroundTrees2Red = new Trees3(128, 0, 0, width / 2 + 150, width, 50, 20, height);
 
   backGroundRed = new WoodsGround(128, 0, 0, 190, 0.01);
   midGround1Red = new WoodsGround(64, 0, 0, 230, 0.01);
@@ -116,49 +116,49 @@ function setup() {
   foreGroundRed = new WoodsGround(10, 0, 0, 320, 0.01);
 
   treeLeavesRed = new TreeLeaves(0, 0, 0, 0, 0.01);
-  
-  
+
+
   //Wolf
-  
-    wolf = new Wolf(width/2 + 20, height/2, 0.2);
-  
-  
+
+  wolf = new Wolf(width / 2 + 20, height / 2, 0.2);
+
+
 }
 
 function draw() {
   background(55);
 
 
- /* if(!mySound.isPlaying()){
-    mySound.loop()
-    ifQuiet = true;
-  }
-  
- if(ifQuiet){ 
-    if(curveVol < 0.4){
-      curveVol+=0.6/450;
-      mySound.setVolume(curveVol)
-    } else {
-      curveVol = 0;
-      ifQuiet = false;
-    }
- }*/
- //if((myBgMusic.currentTime() <= 5) && skipText == false){
-  if((myBgMusic.currentTime() <= 4.5) && skipText == false){
-  push()
-  background(0)
-  textSize(36)
+  /* if(!mySound.isPlaying()){
+     mySound.loop()
+     ifQuiet = true;
+   }
+   
+  if(ifQuiet){ 
+     if(curveVol < 0.4){
+       curveVol+=0.6/450;
+       mySound.setVolume(curveVol)
+     } else {
+       curveVol = 0;
+       ifQuiet = false;
+     }
+  }*/
+  //if((myBgMusic.currentTime() <= 5) && skipText == false){
+  if ((myBgMusic.currentTime() <= 4.5) && skipText == false) {
+    push()
+    background(0)
+    textSize(36)
 
-  fill(255)
-  textAlign(CENTER, CENTER)
-  text("As Little Red Riding Hood trudged onward", width/2, height/2 -30);
-  text("through the woods...", width/2, height/2 + 30);
-  textSize(26)
-  text("Press 's' to skip", width/2, 500)
-  pop()
+    fill(255)
+    textAlign(CENTER, CENTER)
+    text("As Little Red Riding Hood trudged onward", width / 2, height / 2 - 30);
+    text("through the woods...", width / 2, height / 2 + 30);
+    textSize(26)
+    text("Press 's' to skip", width / 2, 500)
+    pop()
   }
   //else if((myBgMusic.currentTime() > 5 && myBgMusic.currentTime() <= 9) && skipText == false){
-    else if((myBgMusic.currentTime() >= 4.5 && myBgMusic.currentTime() <= 9) && skipText == false){
+  else if ((myBgMusic.currentTime() >= 4.5 && myBgMusic.currentTime() <= 9) && skipText == false) {
     push()
     background(0)
     textAlign(CENTER, CENTER)
@@ -167,20 +167,20 @@ function draw() {
     g = map(myBgMusic.currentTime(), 5, 8.5, 255, 0);
     b = map(myBgMusic.currentTime(), 5, 8.5, 255, 0);
     fill(r, g, b);
-    text("...little did she know that a ravenous", width/2, height/2 -30);
-    text("predator had caught wind of her scent...", width/2, height/2 + 30);
+    text("...little did she know that a ravenous", width / 2, height / 2 - 30);
+    text("predator had caught wind of her scent...", width / 2, height / 2 + 30);
     textSize(26)
-    text("Press 's' to skip", width/2, 500)
+    text("Press 's' to skip", width / 2, 500)
     pop()
-  //}
+    //}
 
-  //if (frameCount <= 450 && skipText == false) {
-//Opening text
-   // narration();
-   
-   
-  } else if((myBgMusic.currentTime() >= 9 && playSequence == false) || (skipText == true && playSequence == false)) {
-    
+    //if (frameCount <= 450 && skipText == false) {
+    //Opening text
+    // narration();
+
+
+  } else if ((myBgMusic.currentTime() >= 9 && playSequence == false) || (skipText == true && playSequence == false)) {
+
     let p = new Raindrop(random(width), 400);
     rain.push(p);
 
@@ -221,58 +221,58 @@ function draw() {
     brush(17, 17, 17, 100, 70);
     brush(17, 17, 17, 300, 150);
 
-for (let i = 0; i < 5; i++) {
-    let p = new Particle(xPos + random(-500, 0), 550 - 10);
-    particles.push(p);
-  }
-  for (let i = particles.length - 1; i >= 0; i--) {
-    particles[i].update();
-    particles[i].show();
-    if (particles[i].finished()) {
-      // remove this particle
-      particles.splice(i, 1);
+    for (let i = 0; i < 5; i++) {
+      let p = new Particle(xPos + random(-500, 0), 550 - 10);
+      particles.push(p);
     }
-  }
-  //console.log(particles.length)
-
-  push();
-  translate(xPos, 550);
-  scale(s, 1);
-  littleRed.update();
-  littleRed.display();
-  pop();
-
-  push()
-  if (keyIsPressed == true && instructions1Visible == false && xPos >= 0) {
-    if (keyCode === RIGHT_ARROW) {
-      triggerWarning = false;
-      s = 1;
-      littleRed.left_leg = -littleRed.speed1 / 10;
-      littleRed.right_leg = littleRed.speed1 / 10;
-      xPos += littleRed.xSpd;
-      if(!footsteps.isPlaying()){
-        footsteps.play();
-        //footsteps.loop();
+    for (let i = particles.length - 1; i >= 0; i--) {
+      particles[i].update();
+      particles[i].show();
+      if (particles[i].finished()) {
+        // remove this particle
+        particles.splice(i, 1);
       }
-    } else if (keyCode === LEFT_ARROW) {
-      /*s = -1;
-      littleRed.left_leg = -littleRed.speed1 / 10;
-      littleRed.right_leg = littleRed.speed1 / 10;
-      xPos -= littleRed.xSpd;
-      if(!footsteps.isPlaying()){
-        footsteps.play();
-        //footsteps.loop();
-      }*/
-
-      triggerWarning = true;
-
-    }else{
-      footsteps.pause();
     }
-  }
-  pop()
-    
-    
+    //console.log(particles.length)
+
+    push();
+    translate(xPos, 550);
+    scale(s, 1);
+    littleRed.update();
+    littleRed.display();
+    pop();
+
+    push()
+    if (keyIsPressed == true && instructions1Visible == false && xPos >= 0) {
+      if (keyCode === RIGHT_ARROW) {
+        triggerWarning = false;
+        s = 1;
+        littleRed.left_leg = -littleRed.speed1 / 10;
+        littleRed.right_leg = littleRed.speed1 / 10;
+        xPos += littleRed.xSpd;
+        if (!footsteps.isPlaying()) {
+          footsteps.play();
+          //footsteps.loop();
+        }
+      } else if (keyCode === LEFT_ARROW) {
+        /*s = -1;
+        littleRed.left_leg = -littleRed.speed1 / 10;
+        littleRed.right_leg = littleRed.speed1 / 10;
+        xPos -= littleRed.xSpd;
+        if(!footsteps.isPlaying()){
+          footsteps.play();
+          //footsteps.loop();
+        }*/
+
+        triggerWarning = true;
+
+      } else {
+        footsteps.pause();
+      }
+    }
+    pop()
+
+
     //littleRed.update();
     //littleRed.display();
     backgroundTrees.update();
@@ -282,7 +282,7 @@ for (let i = 0; i < 5; i++) {
     foreGround.display();
     pop();
 
-    push()  
+    push()
     if (instructions1Visible) {
       fill(242, 150);
       stroke(242, 150);
@@ -290,7 +290,7 @@ for (let i = 0; i < 5; i++) {
       rect(width / 2, height / 2 - 5, 400, 150, 10);
       fill(0);
       noStroke()
-      variable = map(sin(frameCount/50), -1, 1, 24, 26);
+      variable = map(sin(frameCount / 50), -1, 1, 24, 26);
       textAlign(CENTER, CENTER)
       textSize(22);
       textStyle(BOLD)
@@ -306,47 +306,47 @@ for (let i = 0; i < 5; i++) {
       fill(0);
       rect(width / 2, height / 2 + 35, 60, 30);
       fill(255);
-  
+
       textSize(18);
       fill(255)
       text("start", width / 2, height / 2 + 35);
     }
-  pop()
+    pop()
 
-push()
-if(triggerWarning){
-  fill(0);
-  //stroke(242, 150);
-  rectMode(CENTER)
-  rect(width / 2, height / 2 - 5, 400, 150, 10);
-  fill("red");
-  noStroke()
-  variable = map(sin(frameCount/50), -1, 1, 24, 26);
-  textAlign(CENTER, CENTER)
-  textSize(22);
-  textStyle(BOLD)
-  textFont("Ariel")
-  text(
-    "Warning!",
-    width / 2,
-    height / 2 - 35
-  );
-  textStyle(NORMAL)
-  text("You cannot go back now.", width / 2, height / 2);
-  textSize(15)
-  fill("red");
-  text("Press right arrow key to continue", width / 2, height / 2 + 35);
+    push()
+    if (triggerWarning) {
+      fill(0);
+      //stroke(242, 150);
+      rectMode(CENTER)
+      rect(width / 2, height / 2 - 5, 400, 150, 10);
+      fill("red");
+      noStroke()
+      variable = map(sin(frameCount / 50), -1, 1, 24, 26);
+      textAlign(CENTER, CENTER)
+      textSize(22);
+      textStyle(BOLD)
+      textFont("Ariel")
+      text(
+        "Warning!",
+        width / 2,
+        height / 2 - 35
+      );
+      textStyle(NORMAL)
+      text("You cannot go back now.", width / 2, height / 2);
+      textSize(15)
+      fill("red");
+      text("Press right arrow key to continue", width / 2, height / 2 + 35);
 
-}
-pop()
+    }
+    pop()
 
     noStroke();
     push();
 
-//Wolf Eye
+    //Wolf Eye
     push();
-    let xc1 = constrain(xPos -10, 157, 243);
-    let xs1 = constrain(550 -5, 130, 170);
+    let xc1 = constrain(xPos - 10, 157, 243);
+    let xs1 = constrain(550 - 5, 130, 170);
 
     let xc2 = constrain(xPos - 15, 135, 225);
     let xs2 = constrain(550 - 15, 120, 160);
@@ -361,14 +361,14 @@ pop()
     fill(0);
     ellipse(xc1, xs1, 50, 50);
     //fill(255, 0, 0)
-   // ellipse(xc1 - 5, xs1, 10, 10)
+    // ellipse(xc1 - 5, xs1, 10, 10)
     fill(255);
     ellipse(xc2, xs2, 20, 10);
     pop();
 
     fill(17);
 
-//Rectangle eyelids
+    //Rectangle eyelids
     if ((frameCount >= logframes && frameCount < logframes + 280) || (myBgMusic.currentTime() >= 9 && myBgMusic.currentTime() < 18)) {
       y1 = y1 + speedy1;
       y2 = y2 + speedy2;
@@ -378,19 +378,19 @@ pop()
     }
     rect(x, 50 + y1, 320, 100);
     rect(x, 150 + y2, 320, 100);
-    
+
   }
 
-  if(xPos >= width/2){
+  if (xPos >= width / 2) {
     playSequence = true;
   }
-  
-  if(playSequence){
+
+  if (playSequence) {
     background(0);
     myBgMusic.pause();
     mySound.pause();
 
-    if(!bgm.isPlaying()){
+    if (!bgm.isPlaying()) {
       bgm.play();
       //bgm.onended(handleEnd);
       //bgm.noLoop();
@@ -402,21 +402,21 @@ pop()
     //fill(255, 255, 255);
     //text("Insert coded sequence", 0, 0)
   }
-  if(bgm.isPlaying()){
+  if (bgm.isPlaying()) {
     push()
     sequence();
     xPos = -100;
     pop();
-  } 
+  }
 
-  if(nextChapter){
+  if (nextChapter) {
     background(0);
     fill(255)
     textAlign(CENTER, CENTER)
     textSize(36)
     let r = map(frameCount, logframes, logframes + 100, 0, 255)
     fill(r);
-    text("Go to next chapter", width/2, height/2)
+    text("Go to next chapter", width / 2, height / 2)
   }
 
 }
@@ -428,11 +428,11 @@ function keyPressed() {
   }
 }
 
-function mousePressed(){
-  let d1 = dist(mouseX, mouseY, width / 2 , height / 2 + 35);
-if (d1 < 20) {
-  instructions1Visible = false;
-}
+function mousePressed() {
+  let d1 = dist(mouseX, mouseY, width / 2, height / 2 + 35);
+  if (d1 < 20) {
+    instructions1Visible = false;
+  }
 }
 
 class WoodsGround {
@@ -446,9 +446,9 @@ class WoodsGround {
     this.maxRange = 0;
   }
 
-  update(){
+  update() {
     push()
-    this.y += map(cos(frameCount/50), -1, 1, -0.002, 0.002)
+    this.y += map(cos(frameCount / 50), -1, 1, -0.002, 0.002)
     //this.endPos += map(sin(frameCount/20), -1, 1, -0.04, 0.04)
     pop()
   }
@@ -483,10 +483,10 @@ class TreesBeginning {
     this.treeHeight = treeHeight;
   }
 
-  update(){
+  update() {
     push()
-    this.startPos += map(cos(frameCount/20), -1, 1, -0.04, 0.04)
-    this.endPos += map(cos(frameCount/20), -1, 1, -0.04, 0.04)
+    this.startPos += map(cos(frameCount / 20), -1, 1, -0.04, 0.04)
+    this.endPos += map(cos(frameCount / 20), -1, 1, -0.04, 0.04)
     pop()
   }
 
@@ -575,8 +575,8 @@ class TreeLeavesBot {
     this.maxRange = 0;
   }
 
-  update(){
-    this.y += map(sin(frameCount/50), -1, 1, -0.001, 0.001)
+  update() {
+    this.y += map(sin(frameCount / 50), -1, 1, -0.001, 0.001)
   }
 
   display() {
@@ -815,9 +815,9 @@ class Particle {
     this.vy = random(-0.7, 1);
     this.alpha = 200;
     this.size = 2;
-    this.r = map(dist(mouseX, mouseY, this.x, this.y), 0, width/2, 0, 255)
-      this.g = map(dist(mouseX, mouseY, this.x, this.y), 0, width/2, 0, 255)
-      this.b = map(dist(mouseX, mouseY, this.x, this.y), 0, width/2, 0, 255)
+    this.r = map(dist(mouseX, mouseY, this.x, this.y), 0, width / 2, 0, 255)
+    this.g = map(dist(mouseX, mouseY, this.x, this.y), 0, width / 2, 0, 255)
+    this.b = map(dist(mouseX, mouseY, this.x, this.y), 0, width / 2, 0, 255)
   }
 
   finished() {
@@ -828,8 +828,8 @@ class Particle {
     this.x += this.vx;
     this.y += this.vy;
     this.alpha -= 3;
-    this.size-= 0.01;
-    
+    this.size -= 0.01;
+
   }
 
   show() {
@@ -837,7 +837,7 @@ class Particle {
     //stroke(255);
     fill(168, 0, 0, this.alpha);
     ellipse(this.x, this.y, this.size);
-    
+
   }
 
 }
@@ -1031,7 +1031,7 @@ class Wolf {
     quad(110, 150, -110, 150, -50, 380, 50, 380)
     rect(-80, 350, 50, 30)
     rect(30, 350, 50, 30)
-    
+
 
     //stroke("red")
     push();
@@ -1047,8 +1047,8 @@ class Wolf {
     //Snout
     //triangle(-10, -50, 0, -70, 10, -50);
     quad(-35, -100, 35, -100, 10, -50, -10, -50)
-    
-push()
+
+    push()
     drawingContext.shadowBlur = 30;
     drawingContext.shadowColor = color("red");
     fill("red");
@@ -1061,7 +1061,7 @@ push()
     triangle(-10, -40, 10, -40, 0, -30);
     rect(-10, -50, 20, 10)
     //rect(-10, 80, 10, 20)
-pop()    
+    pop()
 
     pop();
 
@@ -1103,13 +1103,13 @@ class Lightning {
       this.y2 = 0;
     }
 
-    
+
   }
 }
 
-function darkBackground(){
+function darkBackground() {
   background(0)
-    backgroundTreesDark.display();
+  backgroundTreesDark.display();
 
   brush(17, 17, 17, 0, 440);
   brush(17, 17, 17, 0, 420);
@@ -1117,7 +1117,7 @@ function darkBackground(){
   //brush(17, 17, 17, width, 440);
   //brush(17, 17, 17, width, 420);
   brush(17, 17, 17, 900, 460);
-  
+
 
   backGroundDark.display();
 
@@ -1130,11 +1130,11 @@ function darkBackground(){
   brush(85, 85, 85, 160, 460);
   brush(85, 85, 85, 260, 460)
   brush(85, 85, 85, 330, 460)
-  
+
   brush(85, 85, 85, width, 440);
   brush(85, 85, 85, 890, 460);
   brush(85, 85, 85, 1000, 460)
-  
+
 
   midGround2Dark.display();
 
@@ -1146,168 +1146,168 @@ function darkBackground(){
   brush(105, 105, 105, 150, 500);
   brush(105, 105, 105, 200, 500)
   brush(105, 105, 105, 300, 500)
-  
+
   brush(105, 105, 105, width, 450);
   brush(105, 105, 105, 900, 500);
   brush(105, 105, 105, 1000, 500)
   treeLeavesDark.display();
 }
 
-function redBackground(){
+function redBackground() {
 
-  
+
   backgroundTreesRed.display();
 
-  
+
   brush(64, 0, 0, 0, 440);
   brush(64, 0, 0, 0, 420);
   brush(64, 0, 0, 160, 460);
   brush(64, 0, 0, width, 440);
   brush(64, 0, 0, width, 440);
   brush(64, 0, 0, 900, 460);
-  
+
 
   backGroundRed.display();
 
   midgroundTreesRed.display();
   midgroundTrees2Red.display();
   midGround1Red.display();
-  
+
   brush(20, 0, 0, 0, 440);
   brush(20, 0, 0, 160, 460);
   brush(20, 0, 0, 260, 460)
   brush(20, 0, 0, 330, 460)
-  
+
   brush(20, 0, 0, width, 440);
   brush(20, 0, 0, 890, 460);
   brush(20, 0, 0, 1000, 460)
-  
+
 
   midGround2Red.display();
 
   foregroundTreesRed.display();
   foregroundTrees2Red.display();
   foreGroundRed.display();
-  
-    brush(0, 0, 0, 0, 450);
+
+  brush(0, 0, 0, 0, 450);
   brush(0, 0, 0, 150, 500);
   brush(0, 0, 0, 200, 500)
   brush(0, 0, 0, 300, 500)
-  
+
   brush(0, 0, 0, width, 450);
   brush(0, 0, 0, 900, 500);
   brush(0, 0, 0, 1000, 500)
-  
+
   treeLeavesRed.display();
-  
+
 }
 
-function sequence(){
+function sequence() {
   background(0);
-  
+
   t = ["What's that?", "I hear something", "I'm being stalked", "Keep calm", "What should I do?", "I'm scared", "Run", "Keep running", "Don't look back", "Keep running", "Keep running", "Keep running", "Go to next chapter"]
-  
-  if(bgm.currentTime() > 1 && bgm.currentTime() <= 5){
+
+  if (bgm.currentTime() > 1 && bgm.currentTime() <= 5) {
     //stroke(255, 0, 0)
     fill(255)
     textSize(50)
     textAlign(CENTER, CENTER)
-    text(t[0], width/2, height/2)
-  } else if(bgm.currentTime() > 9.4 && bgm.currentTime() <= 13.5){
+    text(t[0], width / 2, height / 2)
+  } else if (bgm.currentTime() > 9.4 && bgm.currentTime() <= 13.5) {
 
     fill(255)
     textSize(50)
-     textAlign(CENTER, CENTER)
-    text(t[1], width/2, height/2)
-    
-  } else if(bgm.currentTime() > 16 && bgm.currentTime() <= 19.8){
+    textAlign(CENTER, CENTER)
+    text(t[1], width / 2, height / 2)
+
+  } else if (bgm.currentTime() > 16 && bgm.currentTime() <= 19.8) {
 
     fill(255, 0, 0)
     textSize(100)
-     textAlign(CENTER, CENTER)
-    text(t[2], width/2, height/2)
-    
-  } else if(bgm.currentTime() > 19.8 && bgm.currentTime() <= 26){
+    textAlign(CENTER, CENTER)
+    text(t[2], width / 2, height / 2)
+
+  } else if (bgm.currentTime() > 19.8 && bgm.currentTime() <= 26) {
 
     fill(255)
     textSize(50)
-     textAlign(CENTER, CENTER)
-    text(t[3], width/2, height/2)
-  }else if(bgm.currentTime() > 28 && bgm.currentTime() <= 32){
+    textAlign(CENTER, CENTER)
+    text(t[3], width / 2, height / 2)
+  } else if (bgm.currentTime() > 28 && bgm.currentTime() <= 32) {
 
     fill(255)
     textSize(50)
-     textAlign(CENTER, CENTER)
-    text(t[4], width/2, height/2)
-    
-  }else if(bgm.currentTime() > 34 && bgm.currentTime() <= 36.5){
+    textAlign(CENTER, CENTER)
+    text(t[4], width / 2, height / 2)
+
+  } else if (bgm.currentTime() > 34 && bgm.currentTime() <= 36.5) {
     let col = map(bgm.currentTime(), 35.5, 35.55, 255, 0)
     fill(col)
     textSize(25)
-     textAlign(CENTER, CENTER)
-    text(t[5], width/2, height/2)
-  }else if(bgm.currentTime() > 36.5 && bgm.currentTime() <= 40.5){
+    textAlign(CENTER, CENTER)
+    text(t[5], width / 2, height / 2)
+  } else if (bgm.currentTime() > 36.5 && bgm.currentTime() <= 40.5) {
 
     fill(255, 0, 0)
     textSize(60)
-     textAlign(CENTER, CENTER)
-    text(t[6], width/2, height/2)
-  }else if(bgm.currentTime() > 40.5 && bgm.currentTime() <= 44.8){
+    textAlign(CENTER, CENTER)
+    text(t[6], width / 2, height / 2)
+  } else if (bgm.currentTime() > 40.5 && bgm.currentTime() <= 44.8) {
 
     fill(255, 0, 0)
-     textAlign(CENTER, CENTER)
+    textAlign(CENTER, CENTER)
     textSize(80)
-    text(t[7], width/2, height/2)
-  }else if(bgm.currentTime() > 44.8 && bgm.currentTime() <= 47){
+    text(t[7], width / 2, height / 2)
+  } else if (bgm.currentTime() > 44.8 && bgm.currentTime() <= 47) {
 
     fill(255, 0, 0)
-     textAlign(CENTER, CENTER)
+    textAlign(CENTER, CENTER)
     textSize(120)
-    text(t[8], width/2, height/2)
-  }else if(bgm.currentTime() > 47 && bgm.currentTime() <= 49){
+    text(t[8], width / 2, height / 2)
+  } else if (bgm.currentTime() > 47 && bgm.currentTime() <= 49) {
 
     fill(255, 0, 0)
-     textAlign(CENTER, CENTER)
+    textAlign(CENTER, CENTER)
     textSize(150)
-    text(t[9], width/2, height/2)
-  }else if(bgm.currentTime() > 49 && bgm.currentTime() <= 51){
+    text(t[9], width / 2, height / 2)
+  } else if (bgm.currentTime() > 49 && bgm.currentTime() <= 51) {
 
     /*fill(255, 0, 0)
      textAlign(CENTER, CENTER)
     textSize(180)
     text(t[10], width/2, height/2)*/
-    
+
     background(0);
     redBackground();
-  }else if(bgm.currentTime() > 51 && bgm.currentTime() <= 53.2){
+  } else if (bgm.currentTime() > 51 && bgm.currentTime() <= 53.2) {
 
 
     background(random(255))
-        lightning.update();
+    lightning.update();
     lightning.display();
     noStroke()
-        push()
+    push()
     wolf.display();
     pop();
 
     redBackground()
-    
-        //background(0, 0, 0)
+
+    //background(0, 0, 0)
     //redBackground();
-  }else if(bgm.currentTime() > 53.2 && bgm.currentTime() <= 57){
-    
-        background(190, 0, 0)
-        //background(random(255))
-        //lightning.update();
+  } else if (bgm.currentTime() > 53.2 && bgm.currentTime() <= 57) {
+
+    background(190, 0, 0)
+    //background(random(255))
+    //lightning.update();
     //lightning.display();
-      noStroke()
-        push()
+    noStroke()
+    push()
     wolf.display();
     pop();
 
     redBackground()
-  
-  } else if(bgm.currentTime() >= 57){
+
+  } else if (bgm.currentTime() >= 57) {
     nextChapter = true;
     logframes = frameCount;
     /*fill(255)
@@ -1315,5 +1315,5 @@ function sequence(){
     textSize(36)
     text(t[12], width/2, height/2)*/
   }
-  
+
 }

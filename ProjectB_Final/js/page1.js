@@ -21,7 +21,7 @@ let skipText = false;
 let buttonPressed = false;
 let goHome = false;
 
-function preload(){
+function preload() {
   birds = loadSound("assets/birds.mp3");
   rainFall = loadSound("assets/rain.mp3");
   myFont = loadFont("assets/font.ttf");
@@ -37,15 +37,15 @@ function setup() {
 
   let myCanvas = createCanvas(1200, 600);
   myCanvas.parent("canvasContainer")
-  
+
   //forestSound.play();
-  
+
   //myVid = createVideo("assets/convoVid_3.mp4");
   //myVid.size(1200, 600);
   //myVid.volume(1);
   //myVid.noLoop();
   //myVid.hide();
-  
+
   //myVid.onended(handleEnd);
 
   rainFall.setVolume(0.5);
@@ -83,238 +83,225 @@ function setup() {
 
   //Little Red Riding Hood
 
-  littleRedRight = new LittleRedRidingHoodRight(0,0,1,168,0,0,255, 245, 204, 255, 124,63,0);
+  littleRedRight = new LittleRedRidingHoodRight(0, 0, 1, 168, 0, 0, 255, 245, 204, 255, 124, 63, 0);
 
-  littleRedRightDark = new LittleRedRidingHoodRight(0,0,1,80,0,0,255,255,255, 168, 0, 0, 0);
-  
-    textAlign(CENTER, CENTER);
+  littleRedRightDark = new LittleRedRidingHoodRight(0, 0, 1, 80, 0, 0, 255, 255, 255, 168, 0, 0, 0);
+
+  textAlign(CENTER, CENTER);
   textSize(36);
   fill(255, 255, 255);
   textFont(myFont);
-  
+
 
 }
 
 function draw() {
 
-  if(sceneFlip === false){
-    
-    if(!myHarp.isPlaying()){
-       myHarp.play();
-       //myHarp.noLoop();
+  if (sceneFlip === false) {
+
+    if (!myHarp.isPlaying()) {
+      myHarp.play();
+      //myHarp.noLoop();
     }
-  }else{
+  } else {
     myHarp.pause();
   }
 
-  background(226,185,121);
+  background(226, 185, 121);
   image(myImage, 0, 0, 1200, 600)
 
   //if((myHarp.currentTime() <= 12) && skipText == false){
-  if((myHarp.currentTime() <= 12) && skipText == false){
-  textSize(36)
-  fill("brown")
-  text("Once upon a time, there lived in a certain village a little country girl.", width/2, height/2 - 60)
-  text("Her mother was excessively fond of her; and her grandmother doted on her still more.", width/2, height/2)
-  text("This good woman had a red riding hood made for her. It suited the", width/2, height/2 + 60)
-  text("girl so well that everybody called her Little Red Riding Hood.", width/2, height/2 + 120)
-  textSize(26)
-  text("Press 's' to skip", width/2, 500)
+  if ((myHarp.currentTime() <= 12) && skipText == false) {
+    textSize(36)
+    fill("brown")
+    text("Once upon a time, there lived in a certain village a little country girl.", width / 2, height / 2 - 60)
+    text("Her mother was excessively fond of her; and her grandmother doted on her still more.", width / 2, height / 2)
+    text("This good woman had a red riding hood made for her. It suited the", width / 2, height / 2 + 60)
+    text("girl so well that everybody called her Little Red Riding Hood.", width / 2, height / 2 + 120)
+    textSize(26)
+    text("Press 's' to skip", width / 2, 500)
   }
   //else if((myHarp.currentTime() > 12 && myHarp.currentTime() <= 24) && skipText == false){
-  else if((myHarp.currentTime() > 12 && myHarp.currentTime() <= 24) && skipText == false){
+  else if ((myHarp.currentTime() > 12 && myHarp.currentTime() <= 24) && skipText == false) {
     textSize(36)
-    text("One day her mother, having made some cakes, said to her:", width/2, height/2 - 120)
-  text("Go, my dear, and see how your grandmother is doing, for", width/2, height/2 - 60)
-  text("I hear she has been very ill. Take her a cake, and this little pot of butter.", width/2, height/2)
-  text("Little Red Riding Hood thus set out to go visit her grandmother,", width/2, height/2 + 60)
-    text("who lived on the other side of the wood...", width/2, height/2 + 120)
+    text("One day her mother, having made some cakes, said to her:", width / 2, height / 2 - 120)
+    text("Go, my dear, and see how your grandmother is doing, for", width / 2, height / 2 - 60)
+    text("I hear she has been very ill. Take her a cake, and this little pot of butter.", width / 2, height / 2)
+    text("Little Red Riding Hood thus set out to go visit her grandmother,", width / 2, height / 2 + 60)
+    text("who lived on the other side of the wood...", width / 2, height / 2 + 120)
     textSize(26)
-    text("Press 's' to skip", width/2, 500)
-    
-  //} else if(myHarp.currentTime() >= 24 || skipText == true){
-  } else if(myHarp.currentTime() >= 24 || skipText == true){
-  lightBackground();
-  
-  if(sceneFlip === false){
-    
-    if(!birds.isPlaying()){
-       birds.play();
+    text("Press 's' to skip", width / 2, 500)
+
+    //} else if(myHarp.currentTime() >= 24 || skipText == true){
+  } else if (myHarp.currentTime() >= 24 || skipText == true) {
+    lightBackground();
+
+    if (sceneFlip === false) {
+
+      if (!birds.isPlaying()) {
+        birds.play();
+      }
+    } else {
+      birds.pause();
     }
-  }else{
-    birds.pause();
-  }
-  
 
-  push();
-  translate(x, 465);
-  scale(s, 1);
-  littleRedRight.update();
-  littleRedRight.display();
-  pop();
 
-  if (keyIsPressed == true && instructions1Visible == false) {
-    if (keyCode === RIGHT_ARROW) {
-      s = 1;
-      littleRedRight.left_leg = -littleRedRight.speed1 / 10;
-      littleRedRight.right_leg = littleRedRight.speed1 / 10;
-      x += littleRedRight.xSpd;
-      if(!footsteps.isPlaying()){
-        footsteps.play();
-        //footsteps.loop();
+    push();
+    translate(x, 465);
+    scale(s, 1);
+    littleRedRight.update();
+    littleRedRight.display();
+    pop();
+
+    if (keyIsPressed == true && instructions1Visible == false) {
+      if (keyCode === RIGHT_ARROW) {
+        s = 1;
+        littleRedRight.left_leg = -littleRedRight.speed1 / 10;
+        littleRedRight.right_leg = littleRedRight.speed1 / 10;
+        x += littleRedRight.xSpd;
+        if (!footsteps.isPlaying()) {
+          footsteps.play();
+        }
       }
+      else if (keyCode === LEFT_ARROW) {
+        s = -1;
+        littleRedRight.left_leg = -littleRedRight.speed1 / 10;
+        littleRedRight.right_leg = littleRedRight.speed1 / 10;
+        x -= littleRedRight.xSpd;
+
+        if (!footsteps.isPlaying()) {
+          footsteps.play();
+        }
+      } else {
+        footsteps.pause();
       }
 
-      /*s = 1;
-      littleRedRight.left_leg = -littleRedRight.speed1 / 10;
-      littleRedRight.right_leg = littleRedRight.speed1 / 10;
-      x += littleRedRight.xSpd;*/
-    else if (keyCode === LEFT_ARROW) {
-      s = -1;
-      littleRedRight.left_leg = -littleRedRight.speed1 / 10;
-      littleRedRight.right_leg = littleRedRight.speed1 / 10;
-      x -= littleRedRight.xSpd;
-
-      if(!footsteps.isPlaying()){
-        footsteps.play();
-        //footsteps.loop();
-      }
-    }else{
-      footsteps.pause();
     }
-    
-  }
 
-  lightForeground();
-  
-  
-  push()  
-  if (instructions1Visible) {
-    fill(242, 200);
-    stroke(242, 180);
-    rectMode(CENTER)
-    rect(width / 2, height / 2, 400, 150, 10);
-    fill("darkgreen");
-    noStroke()
-    variable = map(sin(frameCount/50), -1, 1, 24, 26);
-    textAlign(CENTER, CENTER)
-    textSize(25);
-    textFont("Ariel")
-    text(
-      "Go to grandmother's house.",
-      width / 2,
-      height / 2 - 35
-    );
+    lightForeground();
 
-    textSize(15)
-    text("Press arrow keys to move", width / 2, height / 2);
-    fill("green");
-    rect(width / 2, height / 2 + 35, 60, 30);
-    fill(255);
 
-    textSize(18);
-    text("start", width / 2, height / 2 + 35);
-  }
-pop()
-  
-  
-  
-push()
-  if (x >= width/2 - 10 && instructions1Visible == false && buttonPressed == false) {
+    push()
+    if (instructions1Visible) {
+      fill(242, 200);
+      stroke(242, 180);
+      rectMode(CENTER)
+      rect(width / 2, height / 2, 400, 150, 10);
+      fill("darkgreen");
+      noStroke()
+      variable = map(sin(frameCount / 50), -1, 1, 24, 26);
+      textAlign(CENTER, CENTER)
+      textSize(25);
+      textFont("Ariel")
+      text(
+        "Go to grandmother's house.",
+        width / 2,
+        height / 2 - 35
+      );
 
-    fill(242, 200);
-    stroke(242, 180);
-    rectMode(CENTER)
-    rect(width / 2, height / 2, 400, 150, 10);
-    fill("darkgreen");
-    noStroke()
-    variable = map(sin(frameCount/50), -1, 1, 24, 26);
-    textAlign(CENTER, CENTER)
-    textSize(22);
-    textFont("Ariel")
-    text(
-      "Uh oh! The weather is growing bad.",
-      width / 2,
-      height / 2 - 35
-    );
-    text("Do you want to continue or go home?", width/2, height/2)
+      textSize(15)
+      text("Press arrow keys to move", width / 2, height / 2);
+      fill("green");
+      rect(width / 2, height / 2 + 35, 60, 30);
+      fill(255);
 
-    textSize(15)
-    //text("Press arrow keys to move", width / 2, height / 2);
-    fill("green");
-    rect(width / 2 - 60, height / 2 + 40, 60, 30);
-    fill(255);
+      textSize(18);
+      text("start", width / 2, height / 2 + 35);
+    }
+    pop()
 
-    textSize(14);
-    text("Continue", width / 2 - 60, height / 2 + 40);
 
-    fill("green");
-    rect(width / 2 + 60, height / 2 + 40, 60, 30);
-    fill(255);
 
-    textSize(14);
-    text("Go home", width / 2 + 60, height / 2 + 40);
-  
+    push()
+    if (x >= width / 2 - 10 && instructions1Visible == false && buttonPressed == false) {
 
-    //sceneFlip = true;
-    //playSound = true;
-  }
-  pop()  
-push()
-  if(buttonPressed && goHome){
-    if(x <= 100){
-      fill(242);
-    stroke(242, 180);
-    rectMode(CENTER)
-    rect(width / 2, height / 2, width, height, 10);
-    fill("red");
-    noStroke()
-    variable = map(sin(frameCount/50), -1, 1, 24, 26);
-    textAlign(CENTER, CENTER)
-    textSize(40);
-    textStyle(BOLD);
-    textFont("Ariel")
-    text(
-      "Oh no!", width / 2, height / 2 - 60);
+      fill(242, 200);
+      stroke(242, 180);
+      rectMode(CENTER)
+      rect(width / 2, height / 2, 400, 150, 10);
+      fill("darkgreen");
+      noStroke()
+      variable = map(sin(frameCount / 50), -1, 1, 24, 26);
+      textAlign(CENTER, CENTER)
+      textSize(22);
+      textFont("Ariel")
+      text(
+        "Uh oh! The weather is growing bad.",
+        width / 2,
+        height / 2 - 35
+      );
+      text("Do you want to continue or go home?", width / 2, height / 2)
 
-      text("You've been scolded by mother for coming home.", width/2, height/2)
+      textSize(15)
+      //text("Press arrow keys to move", width / 2, height / 2);
+      fill("green");
+      rect(width / 2 - 60, height / 2 + 40, 60, 30);
+      fill(255);
 
-    textSize(36)
-    text("Press 'r' to return to forest.", width / 2, height / 2 + 60);
-    //fill("green");
-    //rect(width / 2, height / 2 + 35, 60, 30);
-    //fill(255);
+      textSize(14);
+      text("Continue", width / 2 - 60, height / 2 + 40);
 
-    //textSize(18);
-    //text("start", width / 2, height / 2 + 35);
-  }
+      fill("green");
+      rect(width / 2 + 60, height / 2 + 40, 60, 30);
+      fill(255);
+
+      textSize(14);
+      text("Go home", width / 2 + 60, height / 2 + 40);
+
+
+      //sceneFlip = true;
+      //playSound = true;
+    }
+    pop()
+    push()
+    if (buttonPressed && goHome) {
+      if (x <= 100) {
+        fill(242);
+        stroke(242, 180);
+        rectMode(CENTER)
+        rect(width / 2, height / 2, width, height, 10);
+        fill("red");
+        noStroke()
+        variable = map(sin(frameCount / 50), -1, 1, 24, 26);
+        textAlign(CENTER, CENTER)
+        textSize(40);
+        textStyle(BOLD);
+        textFont("Ariel")
+        text(
+          "Oh no!", width / 2, height / 2 - 60);
+
+        text("You've been scolded by mother for coming home.", width / 2, height / 2)
+
+        textSize(36)
+        text("Press 'r' to return to forest.", width / 2, height / 2 + 60);
+      }
     }
 
     pop()
   }
 
 
-  if(sceneFlip){  
-  
-      background(150, 150, 150);
-  
-  let p = new Raindrop(random(width), 100);
-  fill(255)
-  rain.push(p);
-  
-    for (let i = 0; i < rain.length; i++) {
-    let p = rain[i];
-    p.update();
-    p.display();
-    p.splash();
-    p.fade();
-  }
+  if (sceneFlip) {
 
-  for (let i = rain.length - 1; i >= 0; i--) {
-    if (rain[i].lifespan == true) {
-      rain.splice(i, 1);
+    background(150, 150, 150);
+
+    let p = new Raindrop(random(width), 100);
+    fill(255)
+    rain.push(p);
+
+    for (let i = 0; i < rain.length; i++) {
+      let p = rain[i];
+      p.update();
+      p.display();
+      p.splash();
+      p.fade();
     }
-  }
+
+    for (let i = rain.length - 1; i >= 0; i--) {
+      if (rain[i].lifespan == true) {
+        rain.splice(i, 1);
+      }
+    }
     darkBackground();
     push();
     xDark = x;
@@ -340,17 +327,17 @@ push()
 
     darkForeground();
   }
-  
-    if(playSound){
 
-    if(!rainFall.isPlaying()){
+  if (playSound) {
+
+    if (!rainFall.isPlaying()) {
       rainFall.play();
     }
-  }else{
+  } else {
     rainFall.pause();
   }
 
-//How to make thunder play only once upon scene flip?
+  //How to make thunder play only once upon scene flip?
   /*if(playSound){
 
     if(!thunder.isPlaying()){
@@ -359,12 +346,12 @@ push()
   }else{
     thunder.pause();
   }*/
-  
-  if(xDark >= width){
+
+  if (xDark >= width) {
     background(0)
     fill(255)
     textSize(36)
-    text("Go to next chapter", width/2, height/2)
+    text("Go to next chapter", width / 2, height / 2)
   }
 }
 
@@ -373,7 +360,7 @@ function keyPressed() {
     skipText = true; console.log(skipText)
   }
 
-  if (key == "r"){
+  if (key == "r") {
     buttonPressed = true;
     sceneFlip = true;
     playSound = true;
@@ -382,21 +369,21 @@ function keyPressed() {
   }
 }
 
-function mousePressed(){
-    let d1 = dist(mouseX, mouseY, width / 2 , height / 2 + 35);
+function mousePressed() {
+  let d1 = dist(mouseX, mouseY, width / 2, height / 2 + 35);
   if (d1 < 10) {
     instructions1Visible = false;
   }
 
   let d2 = dist(mouseX, mouseY, width / 2 - 60, height / 2 + 40);
-  if(d2 < 10){
+  if (d2 < 10) {
     buttonPressed = true;
     sceneFlip = true;
     playSound = true;
   }
 
   let d3 = dist(mouseX, mouseY, width / 2 + 60, height / 2 + 40);
-  if(d3 < 10){
+  if (d3 < 10) {
     buttonPressed = true;
     goHome = true;
   }
@@ -436,7 +423,7 @@ function lightBackground() {
   midgroundTrees.display();
   //midGround1.update();
   midGround1.display();
- // midGround2.update();
+  // midGround2.update();
   midGround2.display();
 
   //road.update();
@@ -464,10 +451,10 @@ class Trees1 {
     this.treeHeight = treeHeight;
   }
 
-  update(){
+  update() {
     push()
-    this.startPos += map(sin(frameCount/20), -1, 1, -0.05, 0.05)
-    this.endPos += map(sin(frameCount/20), -1, 1, -0.05, 0.05)
+    this.startPos += map(sin(frameCount / 20), -1, 1, -0.05, 0.05)
+    this.endPos += map(sin(frameCount / 20), -1, 1, -0.05, 0.05)
     pop()
   }
 
@@ -507,10 +494,10 @@ class Trees2 {
     this.treeHeight = treeHeight;
   }
 
-  update(){
+  update() {
     push()
-    this.startPos += map(cos(frameCount/20), -1, 1, -0.03, 0.03)
-    this.endPos += map(cos(frameCount/20), -1, 1, -0.03, 0.03)
+    this.startPos += map(cos(frameCount / 20), -1, 1, -0.03, 0.03)
+    this.endPos += map(cos(frameCount / 20), -1, 1, -0.03, 0.03)
     pop()
   }
 
@@ -550,10 +537,10 @@ class Trees3 {
     this.treeHeight = treeHeight;
   }
 
-  update(){
+  update() {
     push()
-    this.startPos += map(sin(frameCount/20), -1, 1, -0.02, 0.02)
-    this.endPos += map(sin(frameCount/20), -1, 1, -0.02, 0.02)
+    this.startPos += map(sin(frameCount / 20), -1, 1, -0.02, 0.02)
+    this.endPos += map(sin(frameCount / 20), -1, 1, -0.02, 0.02)
     pop()
   }
 
@@ -567,12 +554,12 @@ class Trees3 {
       curveVertex(k + this.treeWidth - 1, 40);
       curveVertex(k + this.treeWidth - 1, 40);
       curveVertex(k + 55, 10);
-      curveVertex(k + this.treeWidth -1, 50);
+      curveVertex(k + this.treeWidth - 1, 50);
       curveVertex(k + this.treeWidth - 1, 50);
       endShape(); //branch
 
       beginShape();
-      curveVertex(k + this.treeWidth -1, 100);
+      curveVertex(k + this.treeWidth - 1, 100);
       curveVertex(k + this.treeWidth - 1, 100);
       curveVertex(k + 55, 70);
       curveVertex(k + this.treeWidth - 1, 110);
@@ -583,15 +570,15 @@ class Trees3 {
       curveVertex(k + this.treeWidth - 1, 180);
       curveVertex(k + this.treeWidth - 1, 180);
       curveVertex(k + 55, 150);
-      curveVertex(k + this.treeWidth -1, 190);
-      curveVertex(k + this.treeWidth -1, 190);
+      curveVertex(k + this.treeWidth - 1, 190);
+      curveVertex(k + this.treeWidth - 1, 190);
       endShape(); //branch
 
       beginShape();
-      curveVertex(k + this.treeWidth -1, 260);
-      curveVertex(k + this.treeWidth -1, 260);
+      curveVertex(k + this.treeWidth - 1, 260);
+      curveVertex(k + this.treeWidth - 1, 260);
       curveVertex(k + 55, 230);
-      curveVertex(k + this.treeWidth -1, 270);
+      curveVertex(k + this.treeWidth - 1, 270);
       curveVertex(k + this.treeWidth - 1, 270);
       endShape(); //branch
     }
@@ -609,9 +596,9 @@ class WoodsGround {
     this.maxRange = 0;
   }
 
-  update(){
+  update() {
     push()
-    this.y += map(cos(frameCount/50), -1, 1, -0.002, 0.002)
+    this.y += map(cos(frameCount / 50), -1, 1, -0.002, 0.002)
     //this.endPos += map(sin(frameCount/20), -1, 1, -0.04, 0.04)
     pop()
   }
@@ -673,8 +660,8 @@ class TreeLeaves {
     //this.move = 1
   }
 
-  update(){
-    this.y = map(sin(frameCount/20), -1, 1, -0.03, 0.03)
+  update() {
+    this.y = map(sin(frameCount / 20), -1, 1, -0.03, 0.03)
   }
 
   display() {
