@@ -436,13 +436,13 @@ function mousePressed() {
 
   //Choice to eat food or go home
   let d3 = dist(mouseX, mouseY, 750 - 145, 350 - 90);
-  if(d3 < 20){
+  if(d3 < 30){
     button3Pressed = true;
     eatFood = true;
   }
 
   let d4 = dist(mouseX, mouseY, 750 + 50, 350 - 90);
-  if (d4 < 20){
+  if (d4 < 30){
     button3Pressed = true;
     goHome = true;
   }

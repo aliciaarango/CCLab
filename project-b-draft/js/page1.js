@@ -377,6 +377,8 @@ function keyPressed() {
     buttonPressed = true;
     sceneFlip = true;
     playSound = true;
+    s = 1;
+    //x = 150;
   }
 }
 

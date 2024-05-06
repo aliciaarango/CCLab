@@ -435,34 +435,6 @@ if (d1 < 20) {
 }
 }
 
-/*function handleEnd(){
-    background(0);
-    fill(255)
-    textAlign(CENTER, CENTER)
-    textSize(36)
-    text("Go to next chapter", width/2, height/2)
-}*/
-
-/*function narration() {
-  background(0);
-
-  translate(width / 2, height / 2);
-
-  if (frameCount <= 200) {
-    text("As Little Red Riding Hood trudged onward", 0, -30);
-    text("through the woods...", 0, 30);
-  } else if (frameCount > 200 && frameCount <= 400) {
-    r = map(frameCount, 200, 350, 255, 108);
-    g = map(frameCount, 200, 350, 255, 0);
-    b = map(frameCount, 200, 350, 255, 0);
-    fill(r, g, b);
-    text("...little did she know that a ravenous", 0, -30);
-    text("predator had caught wind of her scent...", 0, 30);
-  } else {
-    background(0);
-  }
-}*/
-
 class WoodsGround {
   constructor(r, g, b, start_y, increment) {
     this.y = start_y;
@@ -670,110 +642,6 @@ function brush(r, g, b, x, y) {
 
   pop();
 }
-
-
-/*class LittleRedRidingHood {
-  constructor(startX, startY, scaling) {
-    this.x = startX;
-    this.y = startY;
-    this.xSpd = 0.5;
-
-    this.scale = 1;
-    this.scale_width = 1.15;
-
-    this.scaling = scaling;
-  }
-  
-  update() {
-    this.speed4 = map(cos(frameCount / 20), -1, 1, -0.5, 0.5);
-    this.speed1 = sin(frameCount / 20);
-    this.y += this.speed4 / 4;
-
-    this.scale_width += this.speed4 / 280;
-
-
-      this.x += this.xSpd;
-    
-  }
-
-  display() {
-    push();
-    translate(this.x, this.y);
-
-    scale(this.scaling);
-
-    push();
-
-    scale(this.scale, this.scale_width);
-
-    //Legs
-    push();
-    noStroke();
-    let left_leg = -this.speed1 / 10;
-    rotate(left_leg);
-    fill("black");
-    ellipse(-5, 20, 8, 60);
-    pop();
-    push();
-    noStroke();
-    fill("black");
-    let right_leg = this.speed1 / 10;
-    rotate(right_leg);
-    ellipse(-5, 20, 8, 60);
-    pop();
-
-    //Head
-    noStroke();
-    fill("white");
-    ellipse(0, -48, 30);
-    fill("black");
-    stroke(0)
-    bezier(12, -58, -2, -70, -23, -55, -12, -38);
-    line(12, -58, -12, -38);
-
-    //Eye
-    noStroke();
-    fill("black");
-    ellipse(8, -48, 4, 8);
-    fill(255);
-    ellipse(9, -49, 2, 2);
-
-    //Skirts
-    beginShape();
-    stroke(80, 0, 0)
-    fill(168, 0, 0);
-    curveVertex(33, 30);
-    curveVertex(33, 30);
-    curveVertex(15, -20);
-    curveVertex(0, -30);
-    curveVertex(-15, -20);
-    curveVertex(-33, 30);
-    curveVertex(-33, 30);
-    endShape();
-    arc(0, 29, 66, 15, 0, PI);
-
-    push();
-    translate(5, -45);
-    beginShape();
-
-    fill(168, 0, 0);
-    curveVertex(0, 10);
-    curveVertex(0, 10);
-    curveVertex(0, -10);
-    curveVertex(0, -20);
-    curveVertex(-12, -20);
-    curveVertex(-25, -8);
-    curveVertex(-32, 10);
-    curveVertex(-32, 10);
-    endShape();
-    arc(-16, 9, 32, 16, 0, PI);
-    pop();
-
-    pop();
-
-    pop();
-  }
-}*/
 
 class LittleRedRidingHood {
   constructor(startX, startY, scaling) {
@@ -1373,8 +1241,8 @@ function sequence(){
     text(t[4], width/2, height/2)
     
   }else if(bgm.currentTime() > 34 && bgm.currentTime() <= 36.5){
-
-    fill(255)
+    let col = map(bgm.currentTime(), 35.5, 35.55, 255, 0)
+    fill(col)
     textSize(25)
      textAlign(CENTER, CENTER)
     text(t[5], width/2, height/2)

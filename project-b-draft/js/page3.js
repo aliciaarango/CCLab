@@ -190,30 +190,6 @@ function draw() {
 
 push()  
   if (instructions1Visible) {
-    /*fill(242, 180);
-    stroke(242, 180);
-    rectMode(CENTER)
-    rect(width / 2, height / 2, 400, 150, 10);
-    fill(0);
-    noStroke()
-    variable = map(sin(frameCount/50), -1, 1, 24, 26);
-    textAlign(CENTER, CENTER)
-    textSize(25);
-    textFont("Ariel")
-    text(
-      "What do I do?",
-      width / 2,
-      height / 2 - 35
-    );
-
-    textSize(15)
-    text("Press right arrow key to move", width / 2, height / 2);
-    fill(0);
-    rect(width / 2, height / 2 + 35, 60, 30);
-    fill(255);
-
-    textSize(18);
-    text("start", width / 2, height / 2 + 35);*/
 
     fill(242, 200);
     stroke(242, 180);
@@ -262,7 +238,7 @@ push()
     //stroke(242, 180);
     rectMode(CENTER)
     rect(width / 2, height / 2, width, height, 10);
-    image(myImage, 0, 0, 1200, 600);
+    //image(myImage, 0, 0, 1200, 600);
     fill("red");
     noStroke()
     variable = map(sin(frameCount/50), -1, 1, 24, 26);
@@ -312,7 +288,7 @@ push()
   textFont(myFont);
   //translate(width/2, height/2);
 
-    let r = map(frameCount, logframes + 50, logframes + 200, 0, 255)
+    let r = map(frameCount, logframes + 50, logframes + 150, 0, 255)
     fill(r);
     text("Go to next chapter", width/2, height/2);
   }
@@ -349,6 +325,8 @@ function keyPressed(){
     runAway = false; console.log(runAway);
     restart = true;
     xPos = 250;
+    s = 1;
+    instructions1Visible = true;
   }
 }
 
