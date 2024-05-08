@@ -29,30 +29,28 @@ let restart = false;
 let myWolf;
 let eatFood = false;
 
-function preload(){
-  
+function preload() {
+
   myFont = loadFont("assets/font.ttf")
   indoorRain = loadSound("assets/indoorRain.mp3")
   footsteps = loadSound("assets/footstepsWoodFloor.mp3")
 
   bgm = loadSound("assets/bgmPage4.mp3");
   myImage = loadImage("assets/bloodSplatter.png")
-  //forestSound = loadSound("assets/forestAmbience.mp3")
-  //myWolf = loadSound("assets/wolfSounds1.mp3");
   myWolf = loadSound("assets/wolfSoundsPage4.mp3");
 }
 
 function setup() {
   let myCanvas = createCanvas(1200, 600);
   myCanvas.parent("canvasContainer")
-  
+
   textAlign(CENTER, CENTER);
   textSize(36);
   fill(255, 255, 255);
   textFont(myFont);
 
   footsteps.setVolume(0.2);
-  
+
   foodUneaten = new remainsUneaten(175, 360);
 
   foodEaten = new remainsEaten(175, 360);
@@ -66,17 +64,17 @@ function setup() {
 
 function draw() {
   background(10);
-  
-    if(playSound && playSequence == false){
 
-    if(!indoorRain.isPlaying()){
+  if (playSound && playSequence == false) {
+
+    if (!indoorRain.isPlaying()) {
       indoorRain.play();
     }
-  }else{
+  } else {
     indoorRain.pause();
   }
-  
-    let p = new Raindrop(random(width), 100);
+
+  let p = new Raindrop(random(width), 100);
   rain.push(p);
 
   for (let i = 0; i < rain.length; i++) {
@@ -107,16 +105,14 @@ function draw() {
   //floorpost
   fill(10);
   rect(0, 490, width, 10);
-  
-    //window frame
+
+  //window frame
   fill(20);
   rect(396, 96, 10, 210)
   rect(645, 96, 10, 210)
-  rect(396, 96, 250, 10)
-  //rect(396, 96, 258, 210);
+
   //window
   fill(50);
-  //rect(400, 100, 250, 200);
 
   //window bars and sill
   fill(20);
@@ -195,41 +191,39 @@ function draw() {
   } else {
     foodUneaten.display();
   }
-  
+
   push()
-  translate(x,460);
-  scale(s,1);
+  translate(x, 460);
+  scale(s, 1);
   littleRedRight.update()
   littleRedRight.display()
   pop()
 
-      if (keyIsPressed == true) {
+  if (keyIsPressed == true) {
     if (keyCode === RIGHT_ARROW) {
 
-      //bRight = true;
-          s = 1;
+      s = 1;
       littleRedRight.left_leg = -littleRedRight.speed1 / 10;
       littleRedRight.right_leg = littleRedRight.speed1 / 10;
       x += littleRedRight.xSpd;
 
-      if(!footsteps.isPlaying()){
+      if (!footsteps.isPlaying()) {
         footsteps.play();
-      
+
       }
 
     } else if (keyCode === LEFT_ARROW) {
 
-      //bRight = false;
-    s = -1;
+      s = -1;
       littleRedRight.left_leg = -littleRedRight.speed1 / 10;
       littleRedRight.right_leg = littleRedRight.speed1 / 10;
-        x -= littleRedRight.xSpd;
-        if(!footsteps.isPlaying()){
-          footsteps.play();
-  
-        }
-  
-    }else{
+      x -= littleRedRight.xSpd;
+      if (!footsteps.isPlaying()) {
+        footsteps.play();
+
+      }
+
+    } else {
       footsteps.pause();
     }
   }
@@ -249,13 +243,13 @@ function draw() {
     text("Go talk to grandmother.", width / 2 - 50, height / 2 - 135);
 
     textSize(15);
-    text("Press arrow keys to move", width / 2 -50, height / 2 - 100);
+    text("Press arrow keys to move", width / 2 - 50, height / 2 - 100);
     fill(0);
-    rect(width / 2 -50 , height / 2 - 60, 60, 30, 10);
+    rect(width / 2 - 50, height / 2 - 60, 60, 30, 10);
     fill(255);
 
     textSize(18);
-    text("start", width / 2 -50, height / 2 - 60);
+    text("start", width / 2 - 50, height / 2 - 60);
   }
   pop();
 
@@ -263,7 +257,6 @@ function draw() {
     dist(x, 450, 750, 350) < 200
   ) {
     textStyle(BOLD);
-    //textAlign(CENTER, CENTER)
     textAlign(CENTER, CENTER);
     textFont("Courier New", 20);
     text("Press '1' to talk", 750 - 15, 350 - 80);
@@ -277,25 +270,21 @@ function draw() {
   ) {
     push()
     fill(0, 200);
-    //stroke(20, 200);
     rectMode(CENTER);
-    rect(750 -45, 350 - 150, 500, 200, 10);
+    rect(750 - 45, 350 - 150, 500, 200, 10);
     pop()
     textStyle(BOLD);
     textFont("Ariel", 22)
     textAlign(CENTER, CENTER);
     fill(200, 0, 0)
-    //stroke(200, 0, 0)
-    //textFont("Courier New", 20);
     textStyle(NORMAL);
     text("I'm so glad to see you, dear!", 750 - 45, 350 - 220);
     text("You must be tired. Why don't you first eat", 750 - 45, 350 - 180);
     text("the food I've prepared for you on the table?", 750 - 45, 350 - 140);
 
-   push() 
-    //textSize(15);
-   // text("Press arrow keys to move", 750 - 45, 350 - 100);
-   push()
+    push()
+
+    push()
     fill(20);
     rectMode(CENTER)
     rect(750 - 145, 350 - 90, 130, 50, 10);
@@ -320,48 +309,43 @@ function draw() {
   }
 
   push()
-  if(button3Pressed == true && goHome){
-    if(x <= -20 || x >= width + 20){
+  if (button3Pressed == true && goHome) {
+    if (x <= -20 || x >= width + 20) {
       restart = false;
-      if(restart == false){
-      fill(0);
-    //stroke(242, 180);
-    rectMode(CENTER)
-    rect(width / 2, height / 2, width, height, 10);
-    //image(myImage, 0, 0, 1200, 600);
-    fill("red");
-    noStroke()
-    variable = map(sin(frameCount/50), -1, 1, 24, 26);
-    textAlign(CENTER, CENTER)
-    textSize(40);
-    textStyle(BOLD);
-    textFont(myFont);
-    text(
-      "Alas!", width / 2, height / 2 - 80);
+      if (restart == false) {
+        fill(0);
 
-      text("You were not able to get through the door", width/2, height/2 - 20);
-      text("before the wolf sprung out of bed and killed you.", width/2, height/2 + 40);
+        rectMode(CENTER)
+        rect(width / 2, height / 2, width, height, 10);
 
-    textSize(30)
-    text("Press 'r' to restart.", width / 2, height / 2 + 140);
-    //fill("green");
-    //rect(width / 2, height / 2 + 35, 60, 30);
-    //fill(255);
+        fill("red");
+        noStroke()
+        variable = map(sin(frameCount / 50), -1, 1, 24, 26);
+        textAlign(CENTER, CENTER)
+        textSize(40);
+        textStyle(BOLD);
+        textFont(myFont);
+        text(
+          "Alas!", width / 2, height / 2 - 80);
 
-    //textSize(18);
-    //text("start", width / 2, height / 2 + 35);
+        text("You were not able to get through the door", width / 2, height / 2 - 20);
+        text("before the wolf sprung out of bed and killed you.", width / 2, height / 2 + 40);
 
-    if(!myWolf.isPlaying()){
-      myWolf.play();
-      //footsteps.loop();
-    }
-      }else {
+        textSize(30)
+        text("Press 'r' to restart.", width / 2, height / 2 + 140);
+
+
+        if (!myWolf.isPlaying()) {
+          myWolf.play();
+
+        }
+      } else {
         myWolf.pause();
       }
-  }
     }
+  }
 
-    pop()
+  pop()
 
 
 
@@ -381,7 +365,7 @@ function draw() {
     stroke(242, 180);
     rectMode(CENTER);
     rect(width / 2 - 300, height / 2 - 100, 400, 130, 10);
-    //textStyle(BOLD);
+
     textStyle(NORMAL);
     noStroke();
     fill(0);
@@ -402,23 +386,22 @@ function draw() {
     dist(x, 450, 750, 350) < 200
   ) {
     textStyle(BOLD);
-    //textAlign(CENTER, CENTER)
     textFont("Courier New", 20);
     text("Press '3'", 750 - 40, 350 - 80);
   }
 
-if (instr1 && instr2 && button1Pressed &&
-  button2Pressed &&
-  dist(x, 450, 750, 350) < 200 && playSequence){
+  if (instr1 && instr2 && button1Pressed &&
+    button2Pressed &&
+    dist(x, 450, 750, 350) < 200 && playSequence) {
     background(0)
     dialogue();
   }
 
-  if(isDone){
+  if (isDone) {
     r = map(frameCount, logframes, logframes + 100, 0, 255)
     fill(r, 0, 0);
     textSize(46);
-    text("Go to next chapter", width/2, height/2)
+    text("Go to next chapter", width / 2, height / 2)
   }
 
 }
@@ -436,13 +419,13 @@ function mousePressed() {
 
   //Choice to eat food or go home
   let d3 = dist(mouseX, mouseY, 750 - 145, 350 - 90);
-  if(d3 < 30){
+  if (d3 < 30) {
     button3Pressed = true;
     eatFood = true;
   }
 
   let d4 = dist(mouseX, mouseY, 750 + 50, 350 - 90);
-  if (d4 < 30){
+  if (d4 < 30) {
     button3Pressed = true;
     goHome = true;
   }
@@ -458,13 +441,13 @@ function keyPressed() {
     instr2 = true;
   }
 
-  if (key == "3"){
+  if (key == "3") {
     playSequence = true;
     bgm.play();
     bgm.onended(handleEnd);
   }
 
-  if (key == "r"){
+  if (key == "r") {
     goHome = false;
     restart = true;
     button1Pressed = false;
@@ -537,11 +520,9 @@ class LittleRedRidingHoodRight {
   update() {
     this.speed4 = map(cos(frameCount / 20), -1, 1, -0.3, 0.3);
     this.speed1 = sin(frameCount / 15);
-    //this.y += this.speed4 / 4;
 
     this.scale_width += this.speed4 / 280;
 
-    //this.x += this.xSpd;
   }
 
   display() {
@@ -552,7 +533,6 @@ class LittleRedRidingHoodRight {
 
     push();
 
-    // scale(this.scale, this.scale_width);
 
     //Legs
     push();
@@ -588,7 +568,7 @@ class LittleRedRidingHoodRight {
 
     //Skirts
     beginShape();
-    //stroke(80, 0, 0)
+
     fill(168, 0, 0);
     stroke(80, 0, 0);
     strokeWeight(0.5);
@@ -627,25 +607,23 @@ class LittleRedRidingHoodRight {
 
 
 class Raindrop {
-  // constructor function
+
   constructor(startX, startY) {
-    // properties: particle's characteristics
     this.x = startX;
     this.y = startY;
     this.width = 0.5;
     this.height = 15;
     this.spdY = random(2, 3);
-    // this.splashed = false;
     this.lifespan = false;
-    // this.finished = false;
+
     this.r = this.r;
     this.g = this.g;
     this.b = this.b;
     this.alpha = 200;
   }
-  // methods (functions): particle's behaviors
+
   update() {
-    // (add)
+
     this.y += this.spdY;
 
     this.r = 150;
@@ -658,8 +636,6 @@ class Raindrop {
       this.spdY = 0;
       this.width = 22;
       this.height = 2;
-      //this.lifespan = true;
-      //this.splashed = true;
       this.alpha -= 20;
     }
   }
@@ -671,7 +647,6 @@ class Raindrop {
   }
 
   display() {
-    // particle's appearance
     push();
     translate(this.x, this.y);
     stroke(this.r, this.g, this.b, this.alpha);
@@ -705,107 +680,83 @@ function dialogue() {
   textAlign(CENTER, CENTER);
   textStyle(NORMAL);
 
-  if(bgm.currentTime() > 0 && bgm.currentTime() <= 8){
+  if (bgm.currentTime() > 0 && bgm.currentTime() <= 8) {
     r1 = map(bgm.currentTime(), 0, 8, 0, 255)
     fill(r1)
-    text("Unbeknownst to Little Red Riding Hood, the food she", width/2, height/2 - 30)
-    text("had just consumed was the flesh and blood of her own grandmother.", width/2, height/2 + 30)
-  } 
-  
+    text("Unbeknownst to Little Red Riding Hood, the food she", width / 2, height / 2 - 30)
+    text("had just consumed was the flesh and blood of her own grandmother.", width / 2, height / 2 + 30)
+  }
+
   else if (bgm.currentTime() > 8 && bgm.currentTime() <= 15.6) {
     r2 = map(bgm.currentTime(), 10, 13, 255, 0)
     fill(r2, 0, 0);
     text(t[0], width / 2, height / 2 - 30);
     text(t[1], width / 2, height / 2 + 30);
-  } 
-  
-  
+  }
+
   else if (bgm.currentTime() > 15.6 && bgm.currentTime() <= 23.3) {
     r3 = map(bgm.currentTime(), 17, 19, 255, 0)
     fill(r3);
     text(t[2], width / 2, height / 2);
-    
-    
-    
-   } else if (bgm.currentTime() > 23.3 && bgm.currentTime() <= 25.4) {
+
+  } else if (bgm.currentTime() > 23.3 && bgm.currentTime() <= 25.4) {
     fill(255);
-    text(t[3], width / 2, height / 2); 
-     
-    } else if (bgm.currentTime() > 25.4 && bgm.currentTime() <= 31.3) {
+    text(t[3], width / 2, height / 2);
+
+  } else if (bgm.currentTime() > 25.4 && bgm.currentTime() <= 31.3) {
     r4 = map(bgm.currentTime(), 27, 30, 255, 0)
     fill(r4, 0, 0);
     text(t[4], width / 2, height / 2);
-     
-     
+
   } else if (bgm.currentTime() > 31.3 && bgm.currentTime() <= 33) {
     fill(255);
     text(t[5], width / 2, height / 2);
-    
+
   } else if (bgm.currentTime() > 33 && bgm.currentTime() <= 39) {
     r5 = map(bgm.currentTime(), 34, 36, 255, 0)
     fill(r5, 0, 0);
     text(t[6], width / 2, height / 2);
-    
-    
-    
+
   } else if (bgm.currentTime() > 39 && bgm.currentTime() <= 40.8) {
     fill(255);
     text(t[7], width / 2, height / 2);
   } else if (bgm.currentTime() > 40.8 && bgm.currentTime() <= 42.8) {
     fill(255, 0, 0);
     text(t[8], width / 2, height / 2);
-    
-    
-    
+
   } else if (bgm.currentTime() > 42.8 && bgm.currentTime() <= 44.6) {
     fill(255);
     text(t[9], width / 2, height / 2);
   } else if (bgm.currentTime() > 44.6 && bgm.currentTime() <= 46.6) {
     fill(255, 0, 0);
     text(t[10], width / 2, height / 2);
-    
-    
-    
+
   } else if (bgm.currentTime() > 46.6 && bgm.currentTime() <= 48.4) {
     fill(255);
     text(t[11], width / 2, height / 2);
   } else if (bgm.currentTime() > 48.4 && bgm.currentTime() <= 50.5) {
-    //fill(255, 0, 0);
-    //textSize(60)
-    //text(t[12], width / 2, height / 2);
     background(0)
-     push()
+    push()
     wolf.display();
     pop()
 
-    
-
-    
   } else if (bgm.currentTime() > 52.3 && bgm.currentTime() <= 54) {
     fill(255, 0, 0);
-        textSize(60)
+    textSize(60)
     text(t[12], width / 2, height / 2);
-    //background(0)
-
 
   } else if (bgm.currentTime() > 54) {
-    //fill(255, 0, 0);
-    //text(t[12], width / 2, height / 2);
+
     background(0)
-    //trigger = true;
-     //push()
-    //wolf.display();
-    //pop()
+
     image(myImage, 0, 0, 1200, 600);
-    
-  } //else {
-    //trigger = true;
-  //}
+
+  }
 }
 
-function handleEnd(){
-isDone = true;
-logframes = frameCount;
+function handleEnd() {
+  isDone = true;
+  logframes = frameCount;
 }
 
 class Wolf {

@@ -20,6 +20,9 @@ let instructions1Visible = true;
 let skipText = false;
 let buttonPressed = false;
 let goHome = false;
+let continueOn = false;
+let nextChapter = false;
+let triggerWarning = false;
 
 function preload() {
   birds = loadSound("assets/birds.mp3");
@@ -27,8 +30,6 @@ function preload() {
   myFont = loadFont("assets/font.ttf");
   myHarp = loadSound("assets/harp.mp3");
   myImage = loadImage("assets/bgPage2.jpg");
-  //footsteps = loadSound("assets/footstepsDirt.mp3")
-  //footsteps = loadSound("assets/footstepsDirt_1.mp3");
   footsteps = loadSound("assets/footstepsDirt_2.mp3");
 
 }
@@ -38,18 +39,7 @@ function setup() {
   let myCanvas = createCanvas(1200, 600);
   myCanvas.parent("canvasContainer")
 
-  //forestSound.play();
-
-  //myVid = createVideo("assets/convoVid_3.mp4");
-  //myVid.size(1200, 600);
-  //myVid.volume(1);
-  //myVid.noLoop();
-  //myVid.hide();
-
-  //myVid.onended(handleEnd);
-
   rainFall.setVolume(0.5);
-  //thunder.play();
 
   //Light background
 
@@ -110,7 +100,6 @@ function draw() {
   background(226, 185, 121);
   image(myImage, 0, 0, 1200, 600)
 
-  //if((myHarp.currentTime() <= 12) && skipText == false){
   if ((myHarp.currentTime() <= 12) && skipText == false) {
     textSize(36)
     fill("brown")
@@ -121,7 +110,6 @@ function draw() {
     textSize(26)
     text("Press 's' to skip", width / 2, 500)
   }
-  //else if((myHarp.currentTime() > 12 && myHarp.currentTime() <= 24) && skipText == false){
   else if ((myHarp.currentTime() > 12 && myHarp.currentTime() <= 24) && skipText == false) {
     textSize(36)
     text("One day her mother, having made some cakes, said to her:", width / 2, height / 2 - 120)
@@ -132,7 +120,6 @@ function draw() {
     textSize(26)
     text("Press 's' to skip", width / 2, 500)
 
-    //} else if(myHarp.currentTime() >= 24 || skipText == true){
   } else if (myHarp.currentTime() >= 24 || skipText == true) {
     lightBackground();
 
@@ -153,7 +140,7 @@ function draw() {
     littleRedRight.display();
     pop();
 
-    if (keyIsPressed == true && instructions1Visible == false) {
+    if (keyIsPressed == true && instructions1Visible == false && nextChapter == false && triggerWarning == false) {
       if (keyCode === RIGHT_ARROW) {
         s = 1;
         littleRedRight.left_leg = -littleRedRight.speed1 / 10;
@@ -214,70 +201,12 @@ function draw() {
 
     push()
     if (x >= width / 2 - 10 && instructions1Visible == false && buttonPressed == false) {
+      sceneFlip = true;
+      playSound = true;
 
-      fill(242, 200);
-      stroke(242, 180);
-      rectMode(CENTER)
-      rect(width / 2, height / 2, 400, 150, 10);
-      fill("darkgreen");
-      noStroke()
-      variable = map(sin(frameCount / 50), -1, 1, 24, 26);
-      textAlign(CENTER, CENTER)
-      textSize(22);
-      textFont("Ariel")
-      text(
-        "Uh oh! The weather is growing bad.",
-        width / 2,
-        height / 2 - 35
-      );
-      text("Do you want to continue or go home?", width / 2, height / 2)
-
-      textSize(15)
-      //text("Press arrow keys to move", width / 2, height / 2);
-      fill("green");
-      rect(width / 2 - 60, height / 2 + 40, 60, 30);
-      fill(255);
-
-      textSize(14);
-      text("Continue", width / 2 - 60, height / 2 + 40);
-
-      fill("green");
-      rect(width / 2 + 60, height / 2 + 40, 60, 30);
-      fill(255);
-
-      textSize(14);
-      text("Go home", width / 2 + 60, height / 2 + 40);
-
-
-      //sceneFlip = true;
-      //playSound = true;
     }
     pop()
-    push()
-    if (buttonPressed && goHome) {
-      if (x <= 100) {
-        fill(242);
-        stroke(242, 180);
-        rectMode(CENTER)
-        rect(width / 2, height / 2, width, height, 10);
-        fill("red");
-        noStroke()
-        variable = map(sin(frameCount / 50), -1, 1, 24, 26);
-        textAlign(CENTER, CENTER)
-        textSize(40);
-        textStyle(BOLD);
-        textFont("Ariel")
-        text(
-          "Oh no!", width / 2, height / 2 - 60);
 
-        text("You've been scolded by mother for coming home.", width / 2, height / 2)
-
-        textSize(36)
-        text("Press 'r' to return to forest.", width / 2, height / 2 + 60);
-      }
-    }
-
-    pop()
   }
 
 
@@ -326,6 +255,70 @@ function draw() {
     }
 
     darkForeground();
+
+    if (instructions1Visible == false && buttonPressed == false) {
+      push()
+      fill(242, 200);
+      stroke(242, 180);
+      rectMode(CENTER)
+      rect(width / 2, height / 2, 400, 150, 10);
+      fill(0);
+      noStroke()
+      textAlign(CENTER, CENTER)
+      textSize(22);
+      textFont("Ariel")
+      text(
+        "Uh oh! The weather has grown bad.",
+        width / 2,
+        height / 2 - 35
+      );
+      text("Do you want to continue or go home?", width / 2, height / 2)
+
+      textSize(15)
+      fill(0);
+      rect(width / 2 - 60, height / 2 + 40, 60, 30);
+      fill(255);
+
+      textSize(14);
+      text("Continue", width / 2 - 60, height / 2 + 40);
+
+      fill(0);
+      rect(width / 2 + 60, height / 2 + 40, 60, 30);
+      fill(255);
+
+      textSize(14);
+      text("Go home", width / 2 + 60, height / 2 + 40);
+      pop()
+    }
+    push()
+    if (buttonPressed && goHome) {
+      if (x <= 100) {
+        triggerWarning = true;
+        if (triggerWarning) {
+          fill(0);
+          rectMode(CENTER)
+          rect(width / 2, height / 2, width, height, 10);
+          fill("red");
+          noStroke()
+          textAlign(CENTER, CENTER)
+          textSize(40);
+          textStyle(BOLD);
+          textFont("Ariel")
+          text(
+            "Oh no!", width / 2, height / 2 - 60);
+
+          text("You've been scolded by mother for coming home.", width / 2, height / 2)
+
+          textSize(25)
+          text("Press 'r' to return to forest and head to grandmother's house.", width / 2, height / 2 + 80);
+        }
+      }
+    }
+
+    pop()
+
+
+
   }
 
   if (playSound) {
@@ -337,20 +330,15 @@ function draw() {
     rainFall.pause();
   }
 
-  //How to make thunder play only once upon scene flip?
-  /*if(playSound){
 
-    if(!thunder.isPlaying()){
-      thunder.play();
-    }
-  }else{
-    thunder.pause();
-  }*/
+  if (xDark >= width && continueOn) {
+    nextChapter = true;
+  }
 
-  if (xDark >= width) {
+  if (nextChapter) {
     background(0)
     fill(255)
-    textSize(36)
+    textSize(46)
     text("Go to next chapter", width / 2, height / 2)
   }
 }
@@ -361,29 +349,28 @@ function keyPressed() {
   }
 
   if (key == "r") {
-    buttonPressed = true;
-    sceneFlip = true;
-    playSound = true;
     s = 1;
-    //x = 150;
+    x = 150;
+    goHome = false;
+    triggerWarning = false;
+    continueOn = true;
   }
 }
 
 function mousePressed() {
   let d1 = dist(mouseX, mouseY, width / 2, height / 2 + 35);
-  if (d1 < 10) {
+  if (d1 < 15) {
     instructions1Visible = false;
   }
 
   let d2 = dist(mouseX, mouseY, width / 2 - 60, height / 2 + 40);
-  if (d2 < 10) {
+  if (d2 < 15) {
     buttonPressed = true;
-    sceneFlip = true;
-    playSound = true;
+    continueOn = true;
   }
 
   let d3 = dist(mouseX, mouseY, width / 2 + 60, height / 2 + 40);
-  if (d3 < 10) {
+  if (d3 < 15) {
     buttonPressed = true;
     goHome = true;
   }

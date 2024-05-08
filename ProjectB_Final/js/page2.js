@@ -1,8 +1,3 @@
-//ASK CARROT FOR HELP WITH BELOW:
-
-//How to make "bgm" play one time when boolean variable "playSequence" triggered?
-//How to pause "mySound" when boolean variable "playSequence" triggered? How to unpause when 
-
 //Variables for Wolf eyelid
 let x = 0;
 let y1 = 0;
@@ -11,12 +6,15 @@ let speedx = -0.2;
 let speedy1 = -0.2;
 let speedy2 = 0.2;
 
+//Variables for Little Red Riding Hood
 let xPos = 10;
 let s = 1;
 
+//Particle systems
 let rain = [];
 let particles = [];
 
+//Boolean variables
 let instructions1Visible = true;
 let skipText = false;
 let triggerWarning = false;
@@ -75,7 +73,6 @@ function setup() {
 
   foreGround = new WoodsGround(17, 17, 17, 380, 0.01);
 
-  //littleRed = new LittleRedRidingHood(10, 550, 0.55);
   littleRed = new LittleRedRidingHood(0, 0, 0.55);
 
   //Sequence sketch
@@ -128,22 +125,6 @@ function setup() {
 function draw() {
   background(55);
 
-
-  /* if(!mySound.isPlaying()){
-     mySound.loop()
-     ifQuiet = true;
-   }
-   
-  if(ifQuiet){ 
-     if(curveVol < 0.4){
-       curveVol+=0.6/450;
-       mySound.setVolume(curveVol)
-     } else {
-       curveVol = 0;
-       ifQuiet = false;
-     }
-  }*/
-  //if((myBgMusic.currentTime() <= 5) && skipText == false){
   if ((myBgMusic.currentTime() <= 4.5) && skipText == false) {
     push()
     background(0)
@@ -157,7 +138,7 @@ function draw() {
     text("Press 's' to skip", width / 2, 500)
     pop()
   }
-  //else if((myBgMusic.currentTime() > 5 && myBgMusic.currentTime() <= 9) && skipText == false){
+ 
   else if ((myBgMusic.currentTime() >= 4.5 && myBgMusic.currentTime() <= 9) && skipText == false) {
     push()
     background(0)
@@ -172,11 +153,8 @@ function draw() {
     textSize(26)
     text("Press 's' to skip", width / 2, 500)
     pop()
-    //}
 
-    //if (frameCount <= 450 && skipText == false) {
-    //Opening text
-    // narration();
+
 
 
   } else if ((myBgMusic.currentTime() >= 9 && playSequence == false) || (skipText == true && playSequence == false)) {
@@ -215,8 +193,7 @@ function draw() {
 
     treeLeavesTop.display();
 
-    //stroke("red")
-    //brush(17, 17, 17, 0, 50); 
+
     brush(17, 17, 17, 0, 50);
     brush(17, 17, 17, 100, 70);
     brush(17, 17, 17, 300, 150);
@@ -233,7 +210,7 @@ function draw() {
         particles.splice(i, 1);
       }
     }
-    //console.log(particles.length)
+
 
     push();
     translate(xPos, 550);
@@ -252,17 +229,9 @@ function draw() {
         xPos += littleRed.xSpd;
         if (!footsteps.isPlaying()) {
           footsteps.play();
-          //footsteps.loop();
         }
       } else if (keyCode === LEFT_ARROW) {
-        /*s = -1;
-        littleRed.left_leg = -littleRed.speed1 / 10;
-        littleRed.right_leg = littleRed.speed1 / 10;
-        xPos -= littleRed.xSpd;
-        if(!footsteps.isPlaying()){
-          footsteps.play();
-          //footsteps.loop();
-        }*/
+
 
         triggerWarning = true;
 
@@ -273,8 +242,6 @@ function draw() {
     pop()
 
 
-    //littleRed.update();
-    //littleRed.display();
     backgroundTrees.update();
     backgroundTrees.display();
 
@@ -316,7 +283,7 @@ function draw() {
     push()
     if (triggerWarning) {
       fill(0);
-      //stroke(242, 150);
+
       rectMode(CENTER)
       rect(width / 2, height / 2 - 5, 400, 150, 10);
       fill("red");
@@ -360,8 +327,7 @@ function draw() {
     noStroke();
     fill(0);
     ellipse(xc1, xs1, 50, 50);
-    //fill(255, 0, 0)
-    // ellipse(xc1 - 5, xs1, 10, 10)
+
     fill(255);
     ellipse(xc2, xs2, 20, 10);
     pop();
@@ -392,15 +358,10 @@ function draw() {
 
     if (!bgm.isPlaying()) {
       bgm.play();
-      //bgm.onended(handleEnd);
-      //bgm.noLoop();
       playSequence = false;
       xPos = -100;
     }
-    //textAlign(CENTER, CENTER);
-    //translate(width/2, height/2);
-    //fill(255, 255, 255);
-    //text("Insert coded sequence", 0, 0)
+
   }
   if (bgm.isPlaying()) {
     push()
@@ -413,7 +374,7 @@ function draw() {
     background(0);
     fill(255)
     textAlign(CENTER, CENTER)
-    textSize(36)
+    textSize(46)
     let r = map(frameCount, logframes, logframes + 100, 0, 255)
     fill(r);
     text("Go to next chapter", width / 2, height / 2)
@@ -449,7 +410,6 @@ class WoodsGround {
   update() {
     push()
     this.y += map(cos(frameCount / 50), -1, 1, -0.002, 0.002)
-    //this.endPos += map(sin(frameCount/20), -1, 1, -0.04, 0.04)
     pop()
   }
 

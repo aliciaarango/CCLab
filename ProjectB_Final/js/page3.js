@@ -14,7 +14,7 @@ let footsteps;
 let rainFall;
 let myFont;
 let forestSound;
-//let myVid;
+
 let isReady = false;
 let isDone = false;
 let playSound = true;
@@ -33,14 +33,13 @@ let restart = false;
 let myImage;
 let myWolf;
 
-function preload(){
-  
+function preload() {
+
   myFont = loadFont("assets/font.ttf")
   rainFall = loadSound("assets/rain.mp3")
   bgm = loadSound("assets/bgmPage3.mp3");
   footsteps = loadSound("assets/footstepsDirt_2.mp3");
   myImage = loadImage("assets/bloodSplatter.png")
-  //myWolf = loadSound("assets/wolfSound.mp3");
   myWolf = loadSound("assets/wolfSounds1.mp3");
 }
 
@@ -48,27 +47,20 @@ function setup() {
 
   let myCanvas = createCanvas(1200, 600);
   myCanvas.parent("canvasContainer")
-  
+
   textAlign(CENTER, CENTER);
   textSize(36);
   fill(255, 255, 255);
   textFont(myFont);
-  
-  //forestSound.play();
+
+
   rainFall.setVolume(0.5);
-  
-  /*myVid = createVideo("assets/convoVid_3.mp4");
-  myVid.size(1200, 600);
-  myVid.volume(1);
-  myVid.noLoop();
-  myVid.hide();*/
-  
-  //bgm.onended(handleEnd);
+
 
   foregroundTreesDark = new Trees1(119, 119, 119, -30, width, 360, 90, height);
   midgroundTreesDark = new Trees2(51, 51, 51, 70, width, 110, 30, height);
   backgroundTreesDark = new Trees3(17, 17, 17, 20, width, 110, 20, height);
-  
+
   backGround = new WoodsGround(17, 17, 17, 170, 0.01);
   midGround1 = new WoodsGround(51, 51, 51, 230, 0.01);
   midGround2 = new WoodsGround(70, 70, 70, 270, 0.01);
@@ -77,35 +69,35 @@ function setup() {
   road = new Road(200, 200, 200, 375, 0.01);
 
   treeLeaves = new TreeLeaves(40, 40, 40, 0, 0.01);
-  
-  //littleRed = new LittleRedRidingHood(100, 455, 0.9);
+
+
   littleRed = new LittleRedRidingHood(0, 0, 0.9);
 
   wolf = new Wolf(950, 420, 0.4, 255, 255, 255);
 
 
-//Sequence
-littleRedConvo = new LittleRedRidingHood(450, 400, 1);
+  //Sequence
+  littleRedConvo = new LittleRedRidingHood(450, 400, 1);
 
-wolfConvo = new Wolf(720, 350, 0.5, 255, 255, 255);
+  wolfConvo = new Wolf(720, 350, 0.5, 255, 255, 255);
 
-wolf2Convo = new Wolf(720, 350, 0.5, 255, 0, 0);
+  wolf2Convo = new Wolf(720, 350, 0.5, 255, 0, 0);
 
 }
 
 function draw() {
   background(0);
 
-  if(playSound){
+  if (playSound) {
 
-    if(!rainFall.isPlaying()){
+    if (!rainFall.isPlaying()) {
       rainFall.play();
     }
-  }else{
+  } else {
     rainFall.pause();
   }
 
-  
+
   let p = new Raindrop(random(width), 100);
   rain.push(p);
 
@@ -122,8 +114,8 @@ function draw() {
       rain.splice(i, 1);
     }
   }
-  
-  
+
+
   backgroundTreesDark.update();
   backgroundTreesDark.display();
   backGround.display();
@@ -136,7 +128,7 @@ function draw() {
   midGround2.display();
 
   road.display();
-  
+
   wolf.update();
   wolf.display();
 
@@ -147,7 +139,7 @@ function draw() {
   littleRed.update();
   littleRed.display();
   pop();
-  
+
   push()
   if (keyIsPressed == true && instructions1Visible == false && playSequence == false) {
     if (keyCode === RIGHT_ARROW) {
@@ -155,7 +147,7 @@ function draw() {
       littleRed.left_leg = -littleRed.speed1 / 10;
       littleRed.right_leg = littleRed.speed1 / 10;
       xPos += littleRed.xSpd;
-      if(!footsteps.isPlaying()){
+      if (!footsteps.isPlaying()) {
         footsteps.play();
 
       }
@@ -164,31 +156,31 @@ function draw() {
       littleRed.left_leg = -littleRed.speed1 / 10;
       littleRed.right_leg = littleRed.speed1 / 10;
       xPos -= littleRed.xSpd;
-      if(!footsteps.isPlaying()){
+      if (!footsteps.isPlaying()) {
         footsteps.play();
 
       }
-    }else{
+    } else {
       footsteps.pause();
     }
   }
   pop()
-  
-    if (runAway == false && (dist(xPos, 455, wolf.x, wolf.y) < 200)) {
-  textStyle(BOLD);
-  textFont('Courier New', 15);
+
+  if (runAway == false && (dist(xPos, 455, wolf.x, wolf.y) < 200)) {
+    textStyle(BOLD);
+    textFont('Courier New', 15);
     text("Press 'a' to talk", wolf.x - 45, wolf.y - 60);
-  } 
+  }
 
   foregroundTreesDark.update();
   foregroundTreesDark.display();
   foreGround.display();
   treeLeaves.update();
   treeLeaves.display();
-  
-  
 
-push()  
+
+
+  push()
   if (instructions1Visible) {
 
     fill(242, 200);
@@ -197,7 +189,7 @@ push()
     rect(width / 2, height / 2, 400, 150, 10);
     fill(0);
     noStroke()
-    variable = map(sin(frameCount/50), -1, 1, 24, 26);
+    variable = map(sin(frameCount / 50), -1, 1, 24, 26);
     textAlign(CENTER, CENTER)
     textSize(25);
     textFont("Ariel")
@@ -207,10 +199,9 @@ push()
       height / 2 - 35
     );
     textSize(18)
-    text("Do you want to talk to the wolf or run away?", width/2, height/2)
+    text("Do you want to talk to the wolf or run away?", width / 2, height / 2)
 
     textSize(15)
-    //text("Press arrow keys to move", width / 2, height / 2);
     fill(0);
     rect(width / 2 - 70, height / 2 + 40, 65, 30);
 
@@ -227,93 +218,86 @@ push()
 
 
   }
-pop()  
+  pop()
 
-push()
-  if(instructions1Visible == false){
-    if(xPos <= 100 || xPos >= 1150){
+  push()
+  if (instructions1Visible == false) {
+    if (xPos <= 100 || xPos >= 1150) {
       restart = false;
-      if(restart == false){
-      fill(0);
-    //stroke(242, 180);
-    rectMode(CENTER)
-    rect(width / 2, height / 2, width, height, 10);
-    //image(myImage, 0, 0, 1200, 600);
-    fill("red");
-    noStroke()
-    variable = map(sin(frameCount/50), -1, 1, 24, 26);
-    textAlign(CENTER, CENTER)
-    textSize(40);
-    textStyle(BOLD);
-    textFont(myFont);
-    text(
-      "Alas!", width / 2, height / 2 - 80);
+      if (restart == false) {
+        fill(0);
 
-      text("The wolf has chased you down and killed you.", width/2, height/2)
+        rectMode(CENTER)
+        rect(width / 2, height / 2, width, height, 10);
 
-    textSize(30)
-    text("Press 'r' to restart.", width / 2, height / 2 + 120);
-    //fill("green");
-    //rect(width / 2, height / 2 + 35, 60, 30);
-    //fill(255);
+        fill("red");
+        noStroke()
+        variable = map(sin(frameCount / 50), -1, 1, 24, 26);
+        textAlign(CENTER, CENTER)
+        textSize(40);
+        textStyle(BOLD);
+        textFont(myFont);
+        text(
+          "Alas!", width / 2, height / 2 - 80);
 
-    //textSize(18);
-    //text("start", width / 2, height / 2 + 35);
+        text("The wolf has chased you down and killed you.", width / 2, height / 2)
 
-    if(!myWolf.isPlaying()){
-      myWolf.play();
-      //footsteps.loop();
-    }
-      }else {
+        textSize(30)
+        text("Press 'r' to restart.", width / 2, height / 2 + 120);
+
+
+        if (!myWolf.isPlaying()) {
+          myWolf.play();
+
+        }
+      } else {
         myWolf.pause();
       }
-  }
     }
+  }
 
-    pop()
+  pop()
 
 
-  if(playSequence){
+  if (playSequence) {
     push()
     sequence();
     pop()
   }
-  
-//push()  
-  if(isDone){ 
-   //background(0);
-  //textAlign(CENTER, CENTER);
-  textSize(46);
 
-  textFont(myFont);
-  //translate(width/2, height/2);
+
+  if (isDone) {
+
+    textSize(46);
+
+    textFont(myFont);
 
     let r = map(frameCount, logframes + 50, logframes + 150, 0, 255)
     fill(r);
-    text("Go to next chapter", width/2, height/2);
+    text("Go to next chapter", width / 2, height / 2);
   }
-//pop()
 
-  
+
+
 }
 
-function mousePressed(){
-    let d1 = dist(mouseX, mouseY, width / 2 - 70, height / 2 + 40);
+function mousePressed() {
+  let d1 = dist(mouseX, mouseY, width / 2 - 70, height / 2 + 40);
   if (d1 < 20) {
     instructions1Visible = false;
   }
 
   let d2 = dist(mouseX, mouseY, width / 2 + 70, height / 2 + 40);
-  if (d2 < 20){
+  if (d2 < 20) {
     instructions1Visible = false;
     runAway = true;
   }
 }
 
-function keyPressed(){
-  if(key == "a"){
+function keyPressed() {
+  if (key == "a") {
     //darken = true;
-   // forestSound.pause()
+    // forestSound.pause()
     playSound = false;
     //myVid.play()
     playSequence = true;
@@ -321,7 +305,7 @@ function keyPressed(){
     bgm.onended(handleEnd);
   }
 
-  if (key == "r"){
+  if (key == "r") {
     runAway = false; console.log(runAway);
     restart = true;
     xPos = 250;
@@ -330,7 +314,7 @@ function keyPressed(){
   }
 }
 
-function handleEnd(){
+function handleEnd() {
   isDone = true; console.log(isDone);
   logframes = frameCount;
 
@@ -359,10 +343,10 @@ class Trees1 {
     this.treeHeight = treeHeight;
   }
 
-  update(){
+  update() {
     push()
-    this.startPos += map(sin(frameCount/20), -1, 1, -0.05, 0.05)
-    this.endPos += map(sin(frameCount/20), -1, 1, -0.05, 0.05)
+    this.startPos += map(sin(frameCount / 20), -1, 1, -0.05, 0.05)
+    this.endPos += map(sin(frameCount / 20), -1, 1, -0.05, 0.05)
     pop()
   }
 
@@ -402,10 +386,10 @@ class Trees2 {
     this.treeHeight = treeHeight;
   }
 
-  update(){
+  update() {
     push()
-    this.startPos += map(cos(frameCount/20), -1, 1, -0.03, 0.03)
-    this.endPos += map(cos(frameCount/20), -1, 1, -0.03, 0.03)
+    this.startPos += map(cos(frameCount / 20), -1, 1, -0.03, 0.03)
+    this.endPos += map(cos(frameCount / 20), -1, 1, -0.03, 0.03)
     pop()
   }
 
@@ -445,10 +429,10 @@ class Trees3 {
     this.treeHeight = treeHeight;
   }
 
-  update(){
+  update() {
     push()
-    this.startPos += map(sin(frameCount/20), -1, 1, -0.02, 0.02)
-    this.endPos += map(sin(frameCount/20), -1, 1, -0.02, 0.02)
+    this.startPos += map(sin(frameCount / 20), -1, 1, -0.02, 0.02)
+    this.endPos += map(sin(frameCount / 20), -1, 1, -0.02, 0.02)
     pop()
   }
 
@@ -462,12 +446,12 @@ class Trees3 {
       curveVertex(k + this.treeWidth - 1, 40);
       curveVertex(k + this.treeWidth - 1, 40);
       curveVertex(k + 55, 10);
-      curveVertex(k + this.treeWidth -1, 50);
+      curveVertex(k + this.treeWidth - 1, 50);
       curveVertex(k + this.treeWidth - 1, 50);
       endShape(); //branch
 
       beginShape();
-      curveVertex(k + this.treeWidth -1, 100);
+      curveVertex(k + this.treeWidth - 1, 100);
       curveVertex(k + this.treeWidth - 1, 100);
       curveVertex(k + 55, 70);
       curveVertex(k + this.treeWidth - 1, 110);
@@ -478,15 +462,15 @@ class Trees3 {
       curveVertex(k + this.treeWidth - 1, 180);
       curveVertex(k + this.treeWidth - 1, 180);
       curveVertex(k + 55, 150);
-      curveVertex(k + this.treeWidth -1, 190);
-      curveVertex(k + this.treeWidth -1, 190);
+      curveVertex(k + this.treeWidth - 1, 190);
+      curveVertex(k + this.treeWidth - 1, 190);
       endShape(); //branch
 
       beginShape();
-      curveVertex(k + this.treeWidth -1, 260);
-      curveVertex(k + this.treeWidth -1, 260);
+      curveVertex(k + this.treeWidth - 1, 260);
+      curveVertex(k + this.treeWidth - 1, 260);
       curveVertex(k + 55, 230);
-      curveVertex(k + this.treeWidth -1, 270);
+      curveVertex(k + this.treeWidth - 1, 270);
       curveVertex(k + this.treeWidth - 1, 270);
       endShape(); //branch
     }
@@ -535,7 +519,7 @@ class Road {
   display() {
     fill(this.r, this.g, this.b);
     beginShape();
-    //stroke(0);
+
     noStroke();
     strokeWeight(1);
     //makes topline uneven
@@ -561,8 +545,8 @@ class TreeLeaves {
     this.maxRange = 0;
   }
 
-  update(){
-    this.y = map(sin(frameCount/20), -1, 1, -0.03, 0.03)
+  update() {
+    this.y = map(sin(frameCount / 20), -1, 1, -0.03, 0.03)
   }
 
   display() {
@@ -599,18 +583,15 @@ class LittleRedRidingHood {
 
     this.scaling = scaling;
   }
-  
+
   update() {
     this.speed4 = map(cos(frameCount / 20), -1, 1, -0.3, 0.3);
     this.speed1 = sin(frameCount / 20);
-    //this.y += this.speed4 / 4;
 
     this.scale_width += this.speed4 / 280;
 
-    //this.x += this.xSpd;
-    
   }
-  
+
 
 
   display() {
@@ -621,7 +602,6 @@ class LittleRedRidingHood {
 
     push();
 
-   // scale(this.scale, this.scale_width);
 
     //Legs
     push();
@@ -636,7 +616,7 @@ class LittleRedRidingHood {
     rotate(this.right_leg);
     ellipse(-5, 20, 8, 60);
     pop();
-    
+
     scale(this.scale, this.scale_width);
 
     //Head
@@ -697,7 +677,7 @@ class Wolf {
     this.x = start_x;
     this.y = start_y;
     this.scale = sizeScale;
-    
+
     this.scale1 = 1;
     this.scale_width = 1.10;
 
@@ -705,16 +685,15 @@ class Wolf {
     this.g = g;
     this.b = b;
   }
-  
-    update() {
+
+  update() {
     this.speed4 = map(cos(frameCount / 20), -1, 1, -0.5, 0.5);
     this.speed1 = sin(frameCount / 20);
-    //this.y += this.speed4 / 4;
 
     this.scale_width += this.speed4 / 280;
-  
+
   }
-  
+
 
   display() {
 
@@ -724,8 +703,7 @@ class Wolf {
     stroke(0)
     fill(0)
     push()
-   scale(this.scale1, this.scale_width);
-    //angleMode(DEGREES)
+    scale(this.scale1, this.scale_width);
 
     quad(-300, 6, -200, 6, -200, 45, -265, 45)
 
@@ -749,7 +727,7 @@ class Wolf {
     rect(250, 180, 200, 20)
     triangle(450, 180, 450, 200, 500, 200)
     let y = 0
-    let speed = map(sin(frameCount/20), -1, 1, -5, 5)
+    let speed = map(sin(frameCount / 20), -1, 1, -5, 5)
     y += speed
     ellipse(0, y, 200, 120)
 
@@ -774,9 +752,9 @@ class Raindrop {
     this.width = 0.5;
     this.height = 15;
     this.spdY = random(2, 3);
-    // this.splashed = false;
+
     this.lifespan = false;
-    // this.finished = false;
+
     this.r = this.r;
     this.g = this.g;
     this.b = this.b;
@@ -797,8 +775,6 @@ class Raindrop {
       this.spdY = 0;
       this.width = 22;
       this.height = 2;
-      //this.lifespan = true;
-      //this.splashed = true;
       this.alpha -= 20;
     }
   }
@@ -822,7 +798,7 @@ class Raindrop {
   }
 }
 
-function sequence(){
+function sequence() {
 
   background(0);
 
@@ -881,7 +857,7 @@ function sequence(){
     littleRedConvo.display();
     wolfConvo.update();
     wolfConvo.display();
-    
+
   } else if (bgm.currentTime() >= 21.25 && bgm.currentTime() <= 25.7) {
     convoScene(248, 0, 0, 90);
     littleRedConvo.update();
@@ -931,8 +907,8 @@ function sequence(){
     fill(255);
     //textSize(30);
     text("I will do as you say.", width / 2 - 130, height / 2 - 50);
-  
-  }else if (bgm.currentTime() >= 39 && bgm.currentTime() <= 40.1) {
+
+  } else if (bgm.currentTime() >= 39 && bgm.currentTime() <= 40.1) {
     convoScene(248, 0, 0, 90);
     littleRedConvo.update();
     littleRedConvo.display();
@@ -946,44 +922,40 @@ function sequence(){
     textSize(50)
     text("And so they parted separate ways.", width / 2, height / 2);
 
-  }else if (bgm.currentTime() >= 43.3 && bgm.currentTime() <= 47.7) {
+  } else if (bgm.currentTime() >= 43.3 && bgm.currentTime() <= 47.7) {
     fill(255, 0, 0);
     textSize(50)
-    text("The wolf ran as fast as he could.", width / 2, height / 2);  
-    
+    text("The wolf ran as fast as he could.", width / 2, height / 2);
+
   } else if (bgm.currentTime() >= 47.7 && bgm.currentTime() <= 52) {
     fill(255, 0, 0);
     textSize(50)
     text(
-      "It was not long before he arrived",width / 2,height / 2 - 30 );
-    text("at the old woman's house.",width / 2,height / 2 + 30);
+      "It was not long before he arrived", width / 2, height / 2 - 30);
+    text("at the old woman's house.", width / 2, height / 2 + 30);
   } else if (bgm.currentTime() >= 52 && bgm.currentTime() <= 56.5) {
     fill(255, 0, 0);
     textSize(50)
     text(
-      "Where he instantly",width / 2,height / 2 - 30 );
-    text("fell upon her and devoured her.",width / 2,height / 2 + 30);
+      "Where he instantly", width / 2, height / 2 - 30);
+    text("fell upon her and devoured her.", width / 2, height / 2 + 30);
   }
-  
-  
+
+
   else if (bgm.currentTime() >= 56.5 && bgm.currentTime() <= 59.75) {
     fill(255, 0, 0)
     textSize(50)
     text("Soon afterwards,", width / 2, height / 2 - 30);
-    text("the unsuspecting Little Red Riding Hood...",width / 2,height / 2 + 30);
+    text("the unsuspecting Little Red Riding Hood...", width / 2, height / 2 + 30);
   } else if (bgm.currentTime() >= 59.75 && bgm.currentTime() <= 60.98) {
-    //text("...arrived", width / 2, height / 2);
+
     background(0)
-  }else if (bgm.currentTime() >= 60.98 && bgm.currentTime() <= 63.25) {
+  } else if (bgm.currentTime() >= 60.98 && bgm.currentTime() <= 63.25) {
     fill(255, 0, 0)
     textSize(50)
     text("...arrived", width / 2, height / 2);
   } else if (bgm.currentTime() >= 63.25) {
     background(0)
-    //fill(255)
-    //textSize(50)
-    //text("Go to next page", width / 2, height / 2);
 
-    //logframes = frameCount;
   }
 }
