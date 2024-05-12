@@ -359,14 +359,14 @@ function draw() {
     if (!bgm.isPlaying()) {
       bgm.play();
       playSequence = false;
-      xPos = -100;
+      xPos = -100; //Moving Little Red Riding Hood off canvas
     }
 
   }
   if (bgm.isPlaying()) {
     push()
     sequence();
-    xPos = -100;
+    xPos = -100; //Moving Little Red Riding Hood off canvas
     pop();
   }
 
@@ -1232,11 +1232,6 @@ function sequence() {
     text(t[9], width / 2, height / 2)
   } else if (bgm.currentTime() > 49 && bgm.currentTime() <= 51) {
 
-    /*fill(255, 0, 0)
-     textAlign(CENTER, CENTER)
-    textSize(180)
-    text(t[10], width/2, height/2)*/
-
     background(0);
     redBackground();
   } else if (bgm.currentTime() > 51 && bgm.currentTime() <= 53.2) {
@@ -1252,14 +1247,9 @@ function sequence() {
 
     redBackground()
 
-    //background(0, 0, 0)
-    //redBackground();
   } else if (bgm.currentTime() > 53.2 && bgm.currentTime() <= 57) {
 
     background(190, 0, 0)
-    //background(random(255))
-    //lightning.update();
-    //lightning.display();
     noStroke()
     push()
     wolf.display();
@@ -1270,10 +1260,6 @@ function sequence() {
   } else if (bgm.currentTime() >= 57) {
     nextChapter = true;
     logframes = frameCount;
-    /*fill(255)
-    textAlign(CENTER, CENTER)
-    textSize(36)
-    text(t[12], width/2, height/2)*/
   }
 
 }

@@ -296,10 +296,7 @@ function mousePressed() {
 
 function keyPressed() {
   if (key == "a") {
-    //darken = true;
-    // forestSound.pause()
     playSound = false;
-    //myVid.play()
     playSequence = true;
     bgm.play();
     bgm.onended(handleEnd);

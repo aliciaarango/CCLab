@@ -345,7 +345,7 @@ function draw() {
 
 function keyPressed() {
   if (key == "s") {
-    skipText = true; console.log(skipText)
+    skipText = true;
   }
 
   if (key == "r") {
@@ -681,7 +681,7 @@ class LittleRedRidingHoodRight {
     this.right_leg = 0;
     this.r = r;
     this.g = g;
-    this.b = g;
+    this.b = b;
 
     this.rHead = rHead;
     this.gHead = gHead;
@@ -702,11 +702,9 @@ class LittleRedRidingHoodRight {
   update() {
     this.speed4 = map(cos(frameCount / 20), -1, 1, -0.3, 0.3);
     this.speed1 = sin(frameCount / 20);
-    //this.y += this.speed4 / 4;
 
     this.scale_width += this.speed4 / 280;
 
-    //this.x += this.xSpd;
   }
 
   display() {
